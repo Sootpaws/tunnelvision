@@ -1,14 +1,15 @@
 use std::path::Path;
 use anyhow::Result;
 
-fn main() {
-    match run() {
+#[tokio::main]
+async fn main() {
+    match run().await {
         Ok(_) => (),
         Err(e) => eprintln!("{:#}", e),
     }
 }
 
-fn run() -> Result<()> {
+async fn run() -> Result<()> {
     let data = tunnelvision::data::load(Path::new("data"))?;
     dbg!(data);
     Ok(())
