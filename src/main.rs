@@ -12,11 +12,12 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let data = Arc::new(tunnelvision::data::load(Path::new("data"))?);
+    let data = tunnelvision::data::load(Path::new("data"))?;
 
     let app = Router::new()
         .route("/", get(|| async { "Tunnelvision" }))
-        .route("/mural/{key}", get(tunnelvision::pages::mural::page));
+        .route("/mural/{key}", get(tunnelvision::pages::mural::page))
+        .with_state(data);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
     axum::serve(listener, app).await?;

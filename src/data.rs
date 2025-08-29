@@ -5,14 +5,14 @@ use anyhow::{anyhow, bail, Context, Result};
 use std::path::Path;
 use std::fs;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Data {
     artists: HashMap<String, Artist>,
     tags: HashMap<String, Tag>,
     murals: HashMap<String, Mural>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Mural {
     title: String,
@@ -24,7 +24,7 @@ pub struct Mural {
     images: Vec<Image>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Image {
     filename: String,
@@ -34,13 +34,13 @@ pub struct Image {
     alt: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Artist {
     name: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Tag {
     name: String,
