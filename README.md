@@ -17,7 +17,7 @@ things that need to be done before this can become the primary version:
 
 You will need:
 
-- An installed Rust toolchain ([rustup.rs](rustup.rs))
+- An installed Rust toolchain ([rustup.rs](https://rustup.rs))
 - A mural dataset to display (see the premade test dataset in `sample_data`)
 
 The dataset location is currently hardcoded to `./data`. If using the sample
