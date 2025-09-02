@@ -1,5 +1,5 @@
 {
-    description = "";
+    description = "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls.";
 
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";

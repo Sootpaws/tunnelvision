@@ -1,5 +1,6 @@
 [package]
 name = "tunnelvision"
+description = "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
 version = "0.1.0"
 edition = "2024"
 
