@@ -1,0 +1,19 @@
+title = "The Tiger"
+year = 1976
+location = "Under Sol"
+description = """
+According to a 1976 edition of the RHA Resident Bulletin, this mural won fourth
+place in the painting contest. They won $10 in 1976 money.
+"""
+tags = [ "featured", "needs_more_information" ]
+artists = [
+    "robert_bergmann",
+    "lauren_mcdermott",
+    "belissa_oliveira",
+]
+
+[[images]]
+filename = "tiger.jpg"
+date = 2023-11-05
+by = "Erin Monahan"
+alt = "TODO"
