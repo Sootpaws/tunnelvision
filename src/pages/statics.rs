@@ -24,6 +24,8 @@ pub async fn page(extract::Path(file): extract::Path<String>) -> Response {
 fn content_type(file: &str) -> &str {
     if file.ends_with(".css") {
         "text/css"
+    } else if file.ends_with(".png") {
+        "image/png"
     } else {
         "text/plain"
     }
