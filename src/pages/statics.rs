@@ -9,7 +9,7 @@ const STATIC_PATH: &str = "src/pages/static";
 pub async fn page(extract::Path(file): extract::Path<String>) -> Response {
     let file_path = path::Path::new(STATIC_PATH).join(&file);
     match file_path.try_exists() {
-        Ok(true) => match fs::read_to_string(file_path) {
+        Ok(true) => match fs::read(file_path) {
             Ok(contents) => {
                 ([(header::CONTENT_TYPE, content_type(&file))], contents).into_response()
             }
