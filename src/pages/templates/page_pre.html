@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>title</title>
+        <title>{% if ?.title %} {{ title }} {% else %} TunnelVision {% endif %}</title>
         <!-- TODO: Open Graph tags -->
         <link rel="shortcut icon" href="/static/favicon.png">
         <link href="/static/style.css" rel="stylesheet" />

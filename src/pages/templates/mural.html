@@ -1,4 +1,6 @@
-{% include "page_pre" %}
+{% include "page_pre" with {
+    "title": mural.title
+} %}
 <main>
     <h1>{{ mural.title }}</h1>
     <article>
