@@ -1,0 +1,133 @@
+/* Global color constants */
+:root {
+    --color-navbar-background: #333333;
+    --color-navbar-text: #ffffff;
+    --color-navbar-hover: #c0c0c0;
+    --color-navbar-active: #f76902;
+    --color-tag-background: #f1f1f1;
+    --color-text-main: #212529;
+    --color-text-link: #0a58ca;
+}
+
+html {
+    height: 100%;
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    font-family: "sans-serif";
+    color: var(--color-text-main);
+}
+
+nav {
+    width: 100%;
+    background-color: var(--color-navbar-background);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 1rem;
+
+    ul {
+        margin-top: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        text-align: center;
+
+        li {
+            margin: 0 1rem;
+        }
+
+        a {
+            font-size: 1.25rem;
+        }
+
+        a:hover {
+            color: var(--color-navbar-hover);
+        }
+    }
+
+    a {
+        color: var(--color-navbar-text);
+        text-decoration: none;
+        font-size: 1.5rem;
+    }
+}
+
+nav > * {
+    margin-bottom: 1rem;
+}
+
+.navbar-active {
+    color: var(--color-navbar-active);
+}
+
+main {
+    margin: 0 auto;
+    width: min(80rem, 100% - 1rem);
+
+}
+
+article {
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+        flex: 1 1 65%;
+        min-width: 0;
+    }
+
+    section {
+        box-sizing: border-box;
+        flex: 1 1 30%;
+        min-width: 22rem; /* Somewhat magic */
+        padding: 0 1rem;
+
+    }
+}
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+        background-color: var(--color-tag-background);
+        padding: 1rem 2rem;
+        border-radius: 10rem;
+        margin: 0.2rem;
+
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+section > * {
+    margin: 0 0 0.5rem;
+    display: block;
+}
+
+h1 , h2 {
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+a {
+    color: var(--color-text-link);
+}
+
+p , li {
+    line-height: 1.5;
+}

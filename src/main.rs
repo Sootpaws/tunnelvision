@@ -1,13 +1,13 @@
-use std::path::Path;
-use std::sync::Arc;
 use anyhow::Result;
 use axum::{Router, routing::get};
+use std::path::Path;
+use tunnelvision::pages;
 
 #[tokio::main]
 async fn main() {
     match run().await {
         Ok(_) => (),
-        Err(e) => eprintln!("{:#}", e),
+        Err(e) => eprintln!("{e:#}"),
     }
 }
 
@@ -16,7 +16,9 @@ async fn run() -> Result<()> {
 
     let app = Router::new()
         .route("/", get(|| async { "Tunnelvision" }))
-        .route("/mural/{key}", get(tunnelvision::pages::mural::page))
+        .route("/mural/{key}", get(pages::mural::page))
+        .route("/static/{file}", get(pages::statics::page))
+        .fallback(pages::not_found::page)
         .with_state(data);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
