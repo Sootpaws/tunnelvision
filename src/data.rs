@@ -69,6 +69,10 @@ pub fn load(from: &Path) -> Result<Data> {
         let mural_path = path.join("mural.toml");
         let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
         let mural: Mural = toml::from_str(&mural_file).context("Could not path mural file")?;
+        // Check that there is at least one image
+        if mural.images.is_empty() {
+            bail!("Mural has no images, at least one is required");
+        }
         // Verify artists and tags
         for artist in &mural.artists {
             if !artists.contains_key(artist) {
