@@ -1,8 +1,8 @@
+use super::error;
+use anyhow::anyhow;
 use axum::response::{Html, IntoResponse, Response};
 use std::sync::LazyLock;
 use upon::{Engine, Value};
-use super::error;
-use anyhow::anyhow;
 
 /// Global template registry
 static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
@@ -28,10 +28,11 @@ pub fn template(template_name: &str, context: Value) -> Response {
     match TE.get_template(template_name) {
         Some(template) => match template.render_from(&context).to_string() {
             Ok(rendered) => Html(rendered).into_response(),
-            Err(error) => error::page(<_ as Into<anyhow::Error>>::into(error)
-                .context(format!("While rendering template {}", template_name))
+            Err(error) => error::page(
+                <_ as Into<anyhow::Error>>::into(error)
+                    .context(format!("While rendering template {template_name}")),
             ),
-        }
-        None => error::page(anyhow!("Template {} not registered", template_name)),
+        },
+        None => error::page(anyhow!("Template {template_name} not registered")),
     }
 }
