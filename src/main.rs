@@ -17,6 +17,7 @@ async fn run() -> Result<()> {
     let app = Router::new()
         .route("/", get(|| async { "Tunnelvision" }))
         .route("/mural/{key}", get(pages::mural::page))
+        .route("/mural/{key}/{file}", get(pages::mural_image::page))
         .route("/murals/{id}", get(pages::mural_old::page))
         .route("/static/{file}", get(pages::statics::page))
         .fallback(pages::not_found::page)

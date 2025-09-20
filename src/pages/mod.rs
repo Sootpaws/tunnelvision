@@ -1,5 +1,8 @@
-/// Handler for `/mural/{name}`
+/// Handler for `/mural/{key}`
 pub mod mural;
+
+/// Handler for `/mural/{key}/{file}`
+pub mod mural_image;
 
 /// Handler for `/murals/{id}` (pre-rewrite style mural IDs)
 pub mod mural_old;

@@ -5,7 +5,9 @@
     <h1>{{ mural.title }}</h1>
     <article>
         <!-- TODO: Multiple images and caption -->
-        <img src="tiger.jpg" />
+        {% for image in mural.images %}
+            <img src="{{ mural_key }}/{{ image.filename }}" />
+        {% endfor %}
         <section>
             <h2>Description:</h2>
             <p>{{ mural.description }}</p>
