@@ -15,8 +15,8 @@ pub struct Data {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Mural {
-    pub old_id: Option<u16>,
     pub title: String,
+    pub old_id: Option<u16>,
     pub year: u16,
     pub location: String,
     pub description: String,

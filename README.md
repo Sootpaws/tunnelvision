@@ -3,7 +3,6 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
-- Document data file schemas
 - Mural image handling
 - Multi-image mural handling
 - Meta tags for murals
@@ -37,3 +36,34 @@ The layout of the data directory is as follows:
 - `{mural_key}/mural.toml`: Information on the mural with name `mural_key`.
     Images associated with the mural should be put in this directory alongside
     the `mural.toml` file.
+
+### `artists.toml`
+
+Table from artist key string to artist entry. Artist entry:
+
+- `name` - String: Display name of the artist
+
+### `tags.toml`
+
+Table from tag key string to tag entry: Tag entry:
+
+- `name` - String: Display name of the artist
+
+### `{mural_key}/mural.toml`
+
+Mural entry:
+
+- `title` - String: Display name of the mural
+- `old_id`- Optional string: Numeric ID for compatability with old Tunnelvision
+    mural URLs
+- `year` - Positive integer: Year the mural was painted
+- `location` - String: Description of the mural's approximate location
+- `description` - String: General information on the mural
+- `tags` - List of tag keys strings: Tags associated with the mural
+- `artist` - List of artist key strings: Artists associated with the mural
+- `images` - List of image entries:
+    + `filename` - String: File name of the image (relative to `{mural_key}`)
+    + `caption` - Optional string: Caption for the image if needed
+    + `date` - Date: Date on which the image was taken
+    + `by` - String: Image attribution to display
+    + `alt` - String: Alt text for the image
