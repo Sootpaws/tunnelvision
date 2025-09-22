@@ -35,13 +35,13 @@ pub struct Image {
     pub alt: String,
 }
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Artist {
     pub name: String,
 }
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Tag {
     pub name: String,
@@ -99,4 +99,22 @@ pub fn load(from: &Path) -> Result<Data> {
         tags,
         murals,
     })
+}
+
+impl Mural {
+    /// Perform a lookup of this mural's tag keys
+    pub fn lookup_tags<'a>(&self, data: &'a Data) -> Vec<(&str, &'a Tag)> {
+        self.tags
+            .iter()
+            .map(|key| (key.as_str(), data.tags.get(key).unwrap()))
+            .collect()
+    }
+
+    /// Perform a lookup of this mural's artist keys
+    pub fn lookup_artists<'a>(&self, data: &'a Data) -> Vec<(&str, &'a Artist)> {
+        self.artists
+            .iter()
+            .map(|key| (key.as_str(), data.artists.get(key).unwrap()))
+            .collect()
+    }
 }
