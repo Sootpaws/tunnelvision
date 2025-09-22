@@ -7,6 +7,7 @@
     --color-tag-background: #f1f1f1;
     --color-text-main: #212529;
     --color-text-link: #0a58ca;
+    --color-text-accent: #f9a466;
 }
 
 html {
@@ -75,9 +76,27 @@ article {
     display: flex;
     flex-wrap: wrap;
 
-    img {
+    div {
         flex: 1 1 65%;
         min-width: 0;
+
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section, img {
+            width: 100%;
+        }
+
+        p {
+            padding: 1rem 2rem;
+            border-radius: 0.25rem;
+            background-color: var(--color-text-accent);
+            text-align: center;
+            color: var(--color-navbar-text);
+        }
     }
 
     section {

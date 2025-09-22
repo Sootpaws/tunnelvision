@@ -8,8 +8,11 @@ things that need to be done before this can become the primary version:
 - Home page
 - Catalog page
 - Catalog search
+- Fullsize / thumbnail handling
+- Auto-package export
 - About page
 - Open Canvas page
+- API
 
 ## Development Environment
 
