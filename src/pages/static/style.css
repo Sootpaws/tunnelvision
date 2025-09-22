@@ -91,6 +91,8 @@ article {
         }
 
         p {
+            position: relative;
+            bottom: 3rem;
             padding: 1rem 2rem;
             border-radius: 0.25rem;
             background-color: var(--color-text-accent);
