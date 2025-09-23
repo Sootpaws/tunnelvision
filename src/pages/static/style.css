@@ -17,10 +17,14 @@ html {
 
 body {
     margin: 0;
+    height: 100%;
     font-family: "sans-serif";
     color: var(--color-text-main);
+    display: flex;
+    flex-direction: column;
 }
 
+/* Navbar */
 nav {
     width: 100%;
     background-color: var(--color-navbar-background);
@@ -67,9 +71,10 @@ nav > * {
 }
 
 main {
+/* Mural page */
+.mural-main {
     margin: 0 auto;
     width: min(80rem, 100% - 1rem);
-
 }
 
 article {
@@ -110,6 +115,7 @@ article {
     }
 }
 
+/* Components */
 .tag-list {
     list-style: none;
     padding: 0;
@@ -128,6 +134,7 @@ article {
     }
 }
 
+/* General */
 section > * {
     margin: 0 0 0.5rem;
     display: block;

@@ -1,10 +1,9 @@
 {% include "page_pre" with {
     "title": mural.title
 } %}
-<main>
+<main class="mural-main">
     <h1>{{ mural.title }}</h1>
     <article>
-        <!-- TODO: Multiple images and caption -->
         <div>{% for image in mural.images %}
             <section>
                 <img
@@ -16,7 +15,6 @@
                     Photo: {{ image.by }},
                     {{ image.date | format_date }}
                 </p>
-                <!-- Caption -->
             </section>
         {% endfor %}</div>
         <section>
