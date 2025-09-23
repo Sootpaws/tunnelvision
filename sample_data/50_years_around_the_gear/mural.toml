@@ -1,0 +1,42 @@
+title = "50 Years Around the Gear"
+old_id = 187
+year = 2024
+location = "Under DSP"
+description = """
+Engineering House celebrates its 50th anniversary with this mural depicting its
+many house traditions and projects. Some notable mentions are the Human Hamster
+Wheel, painting the SIH rock, and Power Wheels Racing. As a final touch, its
+members placed hand prints (and two foot prints) on the mural."""
+tags = [ "featured", "sih" ]
+artists = [
+    "engineering_house",
+    "brenna_muldowney",
+    "julia_o_gorman",
+    "nat_kleit",
+    "carmen_garcia",
+    "sarah_taylor",
+    "gia_fassari_castiglia",
+    "ally_burke",
+    "ava_lilian",
+    "ak_klimecky"
+]
+
+[[images]]
+filename = "finished.jpg"
+date = 2024-03-20
+by = "Wilson McDade"
+alt = "TODO"
+
+[[images]]
+filename = "wip_1.jpg"
+caption = "Photo provided by Engineering House"
+date = 2024-03-20
+by = "Engineering House"
+alt = "TODO"
+
+[[images]]
+filename = "wip_2.jpg"
+caption = "Photo provided by Engineering House"
+date = 2024-03-20
+by = "Engineering House"
+alt = "TODO"
