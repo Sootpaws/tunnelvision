@@ -10,10 +10,18 @@
         <nav>
             <a href="todo">Tunnel<span class="navbar-active">Vision</span></a>
             <ul>
-                <li><a href="todo">Home</a></li>
-                <li><a href="todo" class="navbar-active">Catalog</a></li>
-                <li><a href="todo">Open Canvas</a></li>
-                <li><a href="todo">About</a></li>
+                <li><a href="/"
+                    {% if ?.page_home %} class="navbar-active" {% endif %}
+                >Home</a></li>
+                <li><a href="todo"
+                    {% if ?.page_catalog %} class="navbar-active" {% endif %}
+                >Catalog</a></li>
+                <li><a href="todo"
+                    {% if ?.page_open_canvas %} class="navbar-active" {% endif %}
+                >Open Canvas</a></li>
+                <li><a href="todo"
+                    {% if ?.page_about %} class="navbar-active" {% endif %}
+                >About</a></li>
             </ul>
             <a href="todo">Github</a>
         </nav>
