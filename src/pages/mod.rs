@@ -1,3 +1,6 @@
+/// Handler for `/`
+pub mod home;
+
 /// Handler for `/mural/{key}`
 pub mod mural;
 

@@ -4,10 +4,10 @@
     --color-navbar-text: #ffffff;
     --color-navbar-hover: #c0c0c0;
     --color-navbar-active: #f76902;
+    --color-banner-background: #f9a466;
     --color-tag-background: #f1f1f1;
     --color-text-main: #212529;
     --color-text-link: #0a58ca;
-    --color-text-accent: #f9a466;
 }
 
 html {
@@ -70,7 +70,25 @@ nav > * {
     color: var(--color-navbar-active);
 }
 
-main {
+/* Home page */
+.home-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+
+    h1 {
+        margin: 2rem 0;
+        padding: 1rem 2rem;
+        border-radius: 0.25rem;
+        background-color: var(--color-banner-background);
+        font-size: 2rem;
+        color: var(--color-navbar-text);
+    }
+}
+
+
 /* Mural page */
 .mural-main {
     margin: 0 auto;
@@ -100,7 +118,7 @@ article {
             bottom: 3rem;
             padding: 1rem 2rem;
             border-radius: 0.25rem;
-            background-color: var(--color-text-accent);
+            background-color: var(--color-banner-background);
             text-align: center;
             color: var(--color-navbar-text);
         }

@@ -12,6 +12,7 @@ things that need to be done before this can become the primary version:
 - Auto-package export
 - About page
 - Open Canvas page
+- Feedback system
 - API
 
 ## Development Environment

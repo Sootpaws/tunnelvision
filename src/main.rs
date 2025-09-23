@@ -15,7 +15,7 @@ async fn run() -> Result<()> {
     let data = tunnelvision::data::load(Path::new("data"))?;
 
     let app = Router::new()
-        .route("/", get(|| async { "Tunnelvision" }))
+        .route("/", get(pages::home::page))
         .route("/mural/{key}", get(pages::mural::page))
         .route("/mural/{key}/{file}", get(pages::mural_image::page))
         .route("/murals/{id}", get(pages::mural_old::page))
