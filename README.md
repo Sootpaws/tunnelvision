@@ -4,7 +4,6 @@ This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
 - Meta tags for murals
-- Home page
 - Tag/artist/year pages
 - Catalog page
 - Catalog search
