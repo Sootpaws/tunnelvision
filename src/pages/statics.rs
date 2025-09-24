@@ -7,7 +7,11 @@ use std::{fs, path};
 const STATIC_PATH: &str = "src/pages/static";
 
 pub async fn page(extract::Path(file): extract::Path<String>) -> Response {
-    let file_path = path::Path::new(STATIC_PATH).join(&file);
+    static_response(&path::Path::new(STATIC_PATH).join(&file), file).await
+}
+
+/// Generate a response for a static file
+pub async fn static_response(file_path: &path::Path, file: String) -> Response {
     match file_path.try_exists() {
         Ok(true) => match fs::read(file_path) {
             Ok(contents) => {

@@ -1,25 +1,36 @@
 {% include "page_pre" with {
     "title": mural.title
 } %}
-<main>
+<main class="mural-main">
     <h1>{{ mural.title }}</h1>
     <article>
-        <!-- TODO: Multiple images and caption -->
-        <img src="tiger.jpg" />
+        <div>{% for image in mural.images %}
+            <section>
+                <img
+                    src="{{ mural_key }}/{{ image.filename }}"
+                    alt="{{ image.alt }}"
+                />
+                <p>
+                    {% if image.caption %} {{ image.caption }} <br> {% endif %}
+                    Photo: {{ image.by }},
+                    {{ image.date | format_date }}
+                </p>
+            </section>
+        {% endfor %}</div>
         <section>
             <h2>Description:</h2>
             <p>{{ mural.description }}</p>
             <h2>Year:</h2>
-            <a href="todo">{{ mural.year }}</a>
+            <a href="/year/{{ mural.year }}">{{ mural.year }}</a>
             <h2>Location:</h2>
             <p>{{ mural.location }}</p>
             <h2>Tags:</h2>
-            <ul class="tag-list"> {% for tag in mural.tags %}
-                <li><a href="todo">{{ tag }}</a></li>
+            <ul class="tag-list"> {% for tag in tags %}
+                <li><a href="/tag/{{ tag.0 }}">{{ tag.1.name }}</a></li>
             {% endfor %} </ul>
             <h2>Artists:</h2>
-            <ul> {% for artist in mural.artists %}
-                <li><a href="todo">{{ artist }}</a></li>
+            <ul> {% for artist in artists %}
+                <li><a href="/artist/{{ artist.0 }}">{{ artist.1.name }}</a></li>
             {% endfor %} </ul>
         </section>
     </article>

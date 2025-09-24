@@ -16,6 +16,7 @@ pub struct Data {
 #[serde(deny_unknown_fields)]
 pub struct Mural {
     pub title: String,
+    pub old_id: Option<u16>,
     pub year: u16,
     pub location: String,
     pub description: String,
@@ -34,13 +35,13 @@ pub struct Image {
     pub alt: String,
 }
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Artist {
     pub name: String,
 }
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct Tag {
     pub name: String,
@@ -69,6 +70,10 @@ pub fn load(from: &Path) -> Result<Data> {
         let mural_path = path.join("mural.toml");
         let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
         let mural: Mural = toml::from_str(&mural_file).context("Could not path mural file")?;
+        // Check that there is at least one image
+        if mural.images.is_empty() {
+            bail!("Mural has no images, at least one is required");
+        }
         // Verify artists and tags
         for artist in &mural.artists {
             if !artists.contains_key(artist) {
@@ -94,4 +99,22 @@ pub fn load(from: &Path) -> Result<Data> {
         tags,
         murals,
     })
+}
+
+impl Mural {
+    /// Perform a lookup of this mural's tag keys
+    pub fn lookup_tags<'a>(&self, data: &'a Data) -> Vec<(&str, &'a Tag)> {
+        self.tags
+            .iter()
+            .map(|key| (key.as_str(), data.tags.get(key).unwrap()))
+            .collect()
+    }
+
+    /// Perform a lookup of this mural's artist keys
+    pub fn lookup_artists<'a>(&self, data: &'a Data) -> Vec<(&str, &'a Artist)> {
+        self.artists
+            .iter()
+            .map(|key| (key.as_str(), data.artists.get(key).unwrap()))
+            .collect()
+    }
 }

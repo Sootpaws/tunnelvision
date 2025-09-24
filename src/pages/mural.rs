@@ -8,7 +8,15 @@ pub async fn page(
     Path(mural_key): Path<String>,
 ) -> Response {
     match data.murals.get(&mural_key) {
-        Some(mural) => template("mural", value! { mural: mural }),
+        Some(mural) => template(
+            "mural",
+            value! {
+                mural: mural,
+                mural_key: mural_key,
+                tags: mural.lookup_tags(&data),
+                artists: mural.lookup_artists(&data)
+            },
+        ),
         None => super::not_found::page().await,
     }
 }
