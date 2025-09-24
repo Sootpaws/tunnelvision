@@ -1,5 +1,12 @@
 {% include "page_pre" with {
-    "title": mural.title
+    "title": mural.title,
+    "path": ("/mural/" | append: mural_key),
+    "description": mural.description,
+    "image": ("/mural/" | append: mural_key | append: "/" | append: mural.images.0.filename),
+    "label1": "Year",
+    "data1": mural.year,
+    "label2": "Location",
+    "data2": mural.location
 } %}
 <main class="mural-main">
     <h1>{{ mural.title }}</h1>

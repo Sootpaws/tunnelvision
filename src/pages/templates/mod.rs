@@ -23,6 +23,7 @@ static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
     te.add_template("error", include_str!("error.html"))
         .unwrap();
 
+    te.add_function("append", |a: &str, b: &str| format!("{a}{b}"));
     te.add_formatter("format_date", format_date);
 
     te
