@@ -133,6 +133,11 @@ article {
     }
 }
 
+/* Error pages */
+.error-main {
+    margin: 0 3rem;
+}
+
 /* Components */
 .tag-list {
     list-style: none;
