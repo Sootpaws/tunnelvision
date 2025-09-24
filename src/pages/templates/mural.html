@@ -18,9 +18,9 @@
                     alt="{{ image.alt }}"
                 />
                 <p>
-                    {% if image.caption %} {{ image.caption }} <br> {% endif %}
-                    Photo: {{ image.by }},
-                    {{ image.date | format_date }}
+                    {%- if image.caption %} {{ image.caption }} <br>
+                    {% endif -%} Photo: {{ image.by }},
+                    {{- image.date | format_date -}}
                 </p>
             </section>
         {% endfor %}</div>
@@ -34,11 +34,11 @@
             <h2>Tags:</h2>
             <ul class="tag-list"> {% for tag in tags %}
                 <li><a href="/tag/{{ tag.0 }}">{{ tag.1.name }}</a></li>
-            {% endfor %} </ul>
+            {%- endfor -%} </ul>
             <h2>Artists:</h2>
             <ul> {% for artist in artists %}
                 <li><a href="/artist/{{ artist.0 }}">{{ artist.1.name }}</a></li>
-            {% endfor %} </ul>
+            {%- endfor -%} </ul>
         </section>
     </article>
 </main>
