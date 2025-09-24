@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% if ?.title %} {{ title }} {% else %} TunnelVision {% endif %}</title>
+        <title>{% if ?.title %} {{ title }} - {% endif %} TunnelVision</title>
         <!-- TODO: Open Graph tags -->
         <link rel="shortcut icon" href="/static/favicon.png">
         <link href="/static/style.css" rel="stylesheet" />
     </head>
     <body>
         <nav>
-            <a href="todo">Tunnel<span class="navbar-active">Vision</span></a>
+            <a href="/">Tunnel<span class="navbar-active">Vision</span></a>
             <ul>
                 <li><a href="/"
                     {% if ?.page_home %} class="navbar-active" {% endif %}
