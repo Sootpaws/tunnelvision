@@ -14,7 +14,11 @@ static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
         .unwrap();
     te.add_template("page_post", include_str!("page_post.html"))
         .unwrap();
+    te.add_template("mural_card", include_str!("mural_card.html"))
+        .unwrap();
     te.add_template("home", include_str!("home.html"))
+        .unwrap();
+    te.add_template("catalog", include_str!("catalog.html"))
         .unwrap();
     te.add_template("mural", include_str!("mural.html"))
         .unwrap();
