@@ -28,7 +28,9 @@
             <h2>Description:</h2>
             <p>{{ mural.description }}</p>
             <h2>Year:</h2>
-            <a href="/year/{{ mural.year }}">{{ mural.year }}</a>
+            <a href="/year/{{ mural.year }}">
+                {% if mural.year %}{{ mural.year }}{% else %}Unknown{% endif %}
+            </a>
             <h2>Location:</h2>
             <p>{{ mural.location }}</p>
             <h2>Tags:</h2>

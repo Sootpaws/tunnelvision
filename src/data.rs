@@ -17,7 +17,7 @@ pub struct Data {
 pub struct Mural {
     pub title: String,
     pub old_id: Option<u16>,
-    pub year: u16,
+    pub year: Option<u16>,
     pub location: String,
     pub description: String,
     pub tags: Vec<String>,

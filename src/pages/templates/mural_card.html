@@ -6,7 +6,7 @@
             alt="{{ image.alt }}"
         />
         <p>{{ mural.title }}</p>
-        <p>({{ mural.year }})</p>
+        <p>({% if mural.year %}{{ mural.year }}{% else %}Unknown{% endif %})</p>
     {% endwith %}
 </a></article>
 {% endwith %}{% endwith %}
