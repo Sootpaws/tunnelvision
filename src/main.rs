@@ -16,6 +16,7 @@ async fn run() -> Result<()> {
 
     let app = Router::new()
         .route("/", get(pages::home::page))
+        .route("/catalog", get(pages::catalog::page))
         .route("/mural/{key}", get(pages::mural::page))
         .route("/mural/{key}/{file}", get(pages::mural_image::page))
         .route("/murals/{id}", get(pages::mural_old::page))
