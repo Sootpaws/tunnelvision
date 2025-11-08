@@ -1,1 +1,12 @@
-{{ title }}
+{% with .0 as mural_key %}{% with .1 as mural %}
+<article class="mural-card"><a href="/mural/{{ mural_key }}">
+    {% with mural.images.0 as image %}
+        <img
+            src="/mural/{{ mural_key }}/{{ image.filename }}"
+            alt="{{ image.alt }}"
+        />
+        <p>{{ mural.title }}</p>
+        <p>({{ mural.year }})</p>
+    {% endwith %}
+</a></article>
+{% endwith %}{% endwith %}
