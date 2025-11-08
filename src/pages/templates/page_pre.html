@@ -3,9 +3,8 @@
     <head>
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tunnelvision.csh.rit.edu{% if ?.path %}{{ path }}{% endif %}"/>
-        <meta property="og:title" content=
-            {%- if ?.title %}"{{ title }}"{% else %}"TunnelVision"{% endif -%}
-        />
+        <meta property="og:title" content="
+            {%- if ?.title -%} {{ title }} - {% endif -%} TunnelVision" />
         <meta property="og:description" content=
             {%- if ?.description %}"{{ description }}"{% else -%}
             "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
@@ -16,9 +15,8 @@
         />
         <meta name="twitter:card" content="summary">
         <meta name="twitter:domain" value="tunnelvision.csh.rit.edu" />
-        <meta name="twitter:title" value=
-            {%- if ?.title %}"{{ title }}"{% else %}"TunnelVision"{% endif -%}
-        />
+        <meta name="twitter:title" value="
+            {%- if ?.title -%} {{ title }} - {% endif -%} TunnelVision" />
         <meta name="twitter:description" value=
             {%- if ?.description %}"{{ description }}"{% else -%}
             "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
