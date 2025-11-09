@@ -1,0 +1,13 @@
+title = "Kendrick Lamar"
+old_id = 81
+location = "Under Sol"
+description = """
+"""
+tags = [ "needs_more_information" ]
+artists = []
+
+[[images]]
+filename = "kendrick.jpg"
+date = 2023-11-05
+by = "Erin Monahan"
+alt = "TODO"
