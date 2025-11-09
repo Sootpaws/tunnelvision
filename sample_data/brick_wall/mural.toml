@@ -1,0 +1,13 @@
+title = "Brick Wall"
+old_id = 15
+location = "At the corner of DSP and Gleason Halls"
+description = """
+"""
+tags = [ "needs_more_information" ]
+artists = []
+
+[[images]]
+filename = "brick_wall.jpg"
+date = 2023-11-05
+by = "Erin Monahan"
+alt = "TODO"
