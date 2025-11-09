@@ -1,0 +1,30 @@
+title = "CSCH Spirit"
+old_id = 217
+year = 1991
+location = "Under DSP"
+description = """
+The Community Service Clubhouse (CSCH), a former Club House in the Residence
+Halls, put up this mural showing a member sitting in a treehouse decorated with
+the club's different activities, including Caroling, Reslife Tours, and
+Playground Building. To the left of the treehouse is a sign with the club's
+tagline "We do it voluntarily". This is one piece that we know a lot about
+because CSCH kept meticulous records, which were turned over to the RIT Archives
+upon their dissolution.
+"""
+tags = [ "sih" ]
+artists = [
+    "community_service_clubhouse",
+]
+
+[[images]]
+filename = "clubhouse.jpg"
+date = 2023-11-05
+by = "Erin Monahan"
+alt = "TODO"
+
+[[images]]
+filename = "mockup.jpg"
+caption = "A mockup of this mural found at the RIT Archives (RITArc-0162 Box 3)"
+date = 2023-11-05
+by = "Wilson McDade"
+alt = "TODO"
