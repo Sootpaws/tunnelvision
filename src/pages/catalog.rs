@@ -18,14 +18,18 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
     rebuilt.path_and_query = Some(PathAndQuery::from_maybe_shared(combined).unwrap());
     let rebuilt = Uri::from_parts(rebuilt).unwrap();
     // Actual page handling
-    let Query(search): Query<Search> = Query::try_from_uri(&rebuilt).unwrap();
-    let murals = search.apply(&data.murals);
-    template(
-        "catalog",
-        value! {
-            murals: murals,
-            search: &search,
-            no_search: search.is_empty()
-        },
-    )
+    match Query::<Search>::try_from_uri(&rebuilt) {
+        Ok(Query(search)) => {
+            let murals = search.apply(&data.murals);
+            template(
+                "catalog",
+                value! {
+                    murals: murals,
+                    search: &search,
+                    no_search: search.is_empty()
+                },
+            )
+        }
+        Err(e) => super::error::page(e.into())
+    }
 }
