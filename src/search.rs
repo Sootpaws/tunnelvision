@@ -11,13 +11,17 @@ pub struct Search {
 }
 
 impl Search {
+    /// Filter and order a set of murals
     pub fn apply<'a>(&self, murals: &'a HashMap<String, Mural>) -> Vec<(&'a String, &'a Mural)> {
         murals.iter().filter_map(|m| self.evaluate(m)).collect()
     }
 
-    /// Check if any search parameters are set
-    pub fn is_empty(&self) -> bool {
-        self.min_year.is_none() && self.max_year.is_none()
+    /// Normalize search terms after deserialization
+    pub fn normalize(&mut self) {
+        if self.year.is_some() {
+            self.min_year = None;
+            self.max_year = None;
+        }
     }
 
     fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
