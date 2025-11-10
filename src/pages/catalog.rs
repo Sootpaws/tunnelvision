@@ -2,7 +2,7 @@ use super::templates::template;
 use crate::search::Search;
 use axum::extract::{Query, State};
 use axum::http::uri::{Parts, PathAndQuery, Uri};
-use axum::response::Response;
+use axum::response::{IntoResponse, Redirect, Response};
 use upon::value;
 
 pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
@@ -12,13 +12,25 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
         .path_and_query()
         .and_then(|paq| paq.query())
         .unwrap_or("");
-    let parts = form_urlencoded::parse(query.as_bytes()).filter(|(_, val)| !val.is_empty());
+    let mut modified = false;
+    let parts = form_urlencoded::parse(query.as_bytes()).filter(|(_, val)| {
+        if val.is_empty() {
+            modified = true;
+            false
+        } else {
+            true
+        }
+    });
     let combined = form_urlencoded::Serializer::new(String::from("?"))
         .extend_pairs(parts)
         .finish();
     let mut rebuilt = Parts::default();
-    rebuilt.path_and_query = Some(PathAndQuery::from_maybe_shared(combined).unwrap());
+    rebuilt.path_and_query = Some(PathAndQuery::from_maybe_shared(combined.clone()).unwrap());
     let rebuilt = Uri::from_parts(rebuilt).unwrap();
+    // Redirect to remove empty parameters
+    if modified {
+        return Redirect::permanent(&format!("/catalog{combined}")).into_response();
+    }
     // Actual page handling
     match Query::<Search>::try_from_uri(&rebuilt) {
         Ok(Query(search)) => {
