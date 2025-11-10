@@ -7,6 +7,7 @@ use std::collections::HashMap;
 pub struct Search {
     min_year: Option<u16>,
     max_year: Option<u16>,
+    year: Option<u16>,
 }
 
 impl Search {
@@ -27,6 +28,11 @@ impl Search {
         }
         if let Some(max_year) = self.max_year
             && mural.1.year > max_year
+        {
+            return None;
+        }
+        if let Some(year) = self.year
+            && mural.1.year != year
         {
             return None;
         }
