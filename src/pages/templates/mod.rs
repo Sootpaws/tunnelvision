@@ -52,7 +52,7 @@ fn format_date(f: &mut fmt::Formatter<'_>, value: &Value) -> fmt::Result {
         Value::Map(map) => match map.first_key_value() {
             Some((_, entry)) => match entry {
                 Value::String(combined) => {
-                    let mut parts = combined.split("-");
+                    let mut parts = combined.split('-');
                     if let Some(year) = parts.next()
                         && let Some(month) = parts.next()
                         && let Some(day) = parts.next()

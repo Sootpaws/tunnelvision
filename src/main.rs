@@ -6,7 +6,7 @@ use tunnelvision::pages;
 #[tokio::main]
 async fn main() {
     match run().await {
-        Ok(_) => (),
+        Ok(()) => (),
         Err(e) => eprintln!("{e:#}"),
     }
 }
