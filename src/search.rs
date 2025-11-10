@@ -24,6 +24,11 @@ impl Search {
         }
     }
 
+    /// Check if the search uses detailed filtering
+    pub fn detailed(&self) -> bool {
+        self.min_year.is_some() || self.max_year.is_some() || self.year.is_some()
+    }
+
     fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
         if let Some(min_year) = self.min_year
             && mural.1.year < min_year
