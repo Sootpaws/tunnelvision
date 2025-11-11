@@ -121,9 +121,28 @@ nav > * {
 
 /* Catalog page */
 .catalog-main {
-    display: flex;
-    flex-wrap: wrap;
+    form {
+        margin: 2rem 0 1rem;
+
+        details {
+            font-size: 1.5rem;
+
+            label {
+                margin: 0 0 0 2rem;
+            }
+        }
+
+        label {
+            font-size: 1.25rem;
+        }
+    }
+
+    section {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
+
 
 /* Mural page */
 .mural-main {

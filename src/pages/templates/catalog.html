@@ -3,24 +3,26 @@
     "title": "Catalog",
     "path": "/catalog",
 } %}
-<form>
-    <input type="submit" value="search" /><br />
-    <details {% if detailed_search %} open="true" {% endif %} >
-        <summary>Detailed Search</summary>
-        <label>Minimum year:<input type="number" name="min_year"
-            {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
-        /></label><br />
-        <label>Maximum year: <input type="number" name="max_year"
-            {% if search.max_year %} value="{{ search.max_year }}" {% endif %}
-        /></label><br />
-        <label>Year: <input type="number" name="year"
-            {% if search.year %} value="{{ search.year }}" {% endif %}
-        /></label>
-    </details>
-</form>
 <main class="catalog-main">
-    {% for mural in murals %}
-        {% include "mural_card" with mural %}
-    {% endfor %}
+    <form>
+        <input type="submit" value="search" /><br />
+        <details {% if detailed_search %} open="true" {% endif %} >
+            <summary>Detailed Search</summary>
+            <label>Minimum year: <input type="number" name="min_year"
+                {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
+            /></label><br />
+            <label>Maximum year: <input type="number" name="max_year"
+                {% if search.max_year %} value="{{ search.max_year }}" {% endif %}
+            /></label><br />
+            <label>Year: <input type="number" name="year"
+                {% if search.year %} value="{{ search.year }}" {% endif %}
+            /></label>
+        </details>
+    </form>
+    <section>
+        {% for mural in murals %}
+            {% include "mural_card" with mural %}
+        {% endfor %}
+    </section>
 </main>
 {% include "page_post" %}
