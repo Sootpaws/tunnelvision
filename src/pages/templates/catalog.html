@@ -16,6 +16,9 @@
             /></label><br />
             <label>Year: <input type="number" name="year"
                 {% if search.year %} value="{{ search.year }}" {% endif %}
+            /></label><br />
+            <label>By decade: <input type="checkbox" name="by_decade" value="true"
+                {% if search.by_decade %} checked="true" {% endif %}
             /></label>
         </details>
     </form>

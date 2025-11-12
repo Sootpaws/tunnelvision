@@ -3,9 +3,11 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
+- Tag search
+- Text search
+- General search
+- Sorting options
 - Tag/artist/year pages
-- Catalog page
-- Catalog search
 - Fullsize / thumbnail handling
 - Auto-package export
 - About page

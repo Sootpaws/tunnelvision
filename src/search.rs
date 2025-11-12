@@ -8,6 +8,8 @@ pub struct Search {
     min_year: Option<u16>,
     max_year: Option<u16>,
     year: Option<u16>,
+    #[serde(default)]
+    by_decade: bool,
 }
 
 impl Search {
@@ -26,22 +28,35 @@ impl Search {
 
     /// Check if the search uses detailed filtering
     pub fn detailed(&self) -> bool {
-        self.min_year.is_some() || self.max_year.is_some() || self.year.is_some()
+        self.min_year.is_some() || self.max_year.is_some() || self.year.is_some() || self.by_decade
     }
 
     fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
-        if let Some(min_year) = self.min_year
-            && mural.1.year < min_year
+        let mural_year = if self.by_decade {
+            mural.1.year / 10
+        } else {
+            mural.1.year
+        };
+        let min_year = self
+            .min_year
+            .map(|v| if self.by_decade { v / 10 } else { v });
+        let max_year = self
+            .max_year
+            .map(|v| if self.by_decade { v / 10 } else { v });
+        let year = self.year.map(|v| if self.by_decade { v / 10 } else { v });
+
+        if let Some(min_year) = min_year
+            && mural_year < min_year
         {
             return None;
         }
-        if let Some(max_year) = self.max_year
-            && mural.1.year > max_year
+        if let Some(max_year) = max_year
+            && mural_year > max_year
         {
             return None;
         }
-        if let Some(year) = self.year
-            && mural.1.year != year
+        if let Some(year) = year
+            && mural_year != year
         {
             return None;
         }
