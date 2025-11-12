@@ -39,6 +39,15 @@ impl Search {
             || self.by_decade
     }
 
+    /// Check if the search filters by year only
+    pub fn year_only(&self) -> bool {
+        self.year.is_some()
+            && self.query.is_empty()
+            && self.text.is_empty()
+            && self.min_year.is_none()
+            && self.max_year.is_none()
+    }
+
     fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
         // Filter by general query
         if !self.query.is_empty()

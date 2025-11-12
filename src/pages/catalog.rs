@@ -41,7 +41,8 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
                 value! {
                     murals: murals,
                     search: &search,
-                    detailed_search: search.detailed()
+                    detailed_search: search.detailed(),
+                    year_only: search.year_only()
                 },
             )
         }

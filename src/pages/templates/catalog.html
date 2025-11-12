@@ -5,6 +5,7 @@
 } %}
 <main class="catalog-main">
     <form>
+        {% if year_only %}<h2>Murals from {{ search.year }}</h2>{% endif %}
         <label class="search-bar">
             <input
                 type="search" name="query" value="{{ search.query }}"
