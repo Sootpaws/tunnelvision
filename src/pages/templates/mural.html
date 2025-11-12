@@ -30,19 +30,19 @@
                 <p>{{ mural.description }}</p>
             {% endif %}
             <h2>Year:</h2>
-            <a href="/year/{{ mural.year }}">
+            <a href="/catalog?year={{ mural.year }}">
                 {% if mural.year %}{{ mural.year }}{% else %}Unknown{% endif %}
             </a>
             <h2>Location:</h2>
             <p>{{ mural.location }}</p>
             <h2>Tags:</h2>
             <ul class="tag-list"> {% for tag in tags %}
-                <li><a href="/tag/{{ tag.0 }}">{{ tag.1.name }}</a></li>
+                <li><a href="/catalog?tag={{ tag.0 }}">{{ tag.1.name }}</a></li>
             {%- endfor -%} </ul>
             {% if artists %}
                 <h2>Artists:</h2>
                 <ul> {% for artist in artists %}
-                    <li><a href="/artist/{{ artist.0 }}">{{ artist.1.name }}</a></li>
+                    <li><a href="/catalog?artist={{ artist.0 }}">{{ artist.1.name }}</a></li>
                 {%- endfor -%} </ul>
             {% endif %}
         </section>
