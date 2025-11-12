@@ -8,6 +8,9 @@
         <input type="submit" value="search" /><br />
         <details {% if detailed_search %} open="true" {% endif %} >
             <summary>Detailed Search</summary>
+            <label>Contains text: <input type="text" name="text"
+                value="{{ search.text }}"
+            /></label><br />
             <label>Minimum year: <input type="number" name="min_year"
                 {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
             /></label><br />
