@@ -5,6 +5,7 @@
 } %}
 <main class="catalog-main">
     <form>
+        <input type="search" name="query" value="{{ search.query }}">
         <input type="submit" value="search" /><br />
         <details {% if detailed_search %} open="true" {% endif %} >
             <summary>Detailed Search</summary>

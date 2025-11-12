@@ -5,6 +5,8 @@ use std::collections::HashMap;
 #[derive(Clone, Serialize, Deserialize, Default, Debug)]
 #[serde(deny_unknown_fields, default)]
 pub struct Search {
+    // Generic search over text and metadata
+    query: String,
     // Filter by associated text
     text: String,
     // Filter by year painted
@@ -38,11 +40,25 @@ impl Search {
     }
 
     fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
-        // Filter by text
-        let terms = self.text.split(' ').collect::<Vec<_>>();
-        if !terms.is_empty() && !search_mural(mural.1, &terms) {
+        // Filter by general query
+        if !self.query.is_empty()
+            && !self
+                .query
+                .split(' ')
+                .all(|term| search_mural_all(mural.1, term))
+        {
             return None;
         }
+        // Filter by text
+        if !self.text.is_empty()
+            && !self
+                .text
+                .split(' ')
+                .all(|term| search_mural_text(mural.1, term))
+        {
+            return None;
+        }
+
         // Filter by year
         let mural_year = if self.by_decade {
             mural.1.year / 10
@@ -76,18 +92,22 @@ impl Search {
     }
 }
 
-fn search_mural(mural: &Mural, terms: &[&str]) -> bool {
-    terms.iter().all(|term| {
-        mural.title.contains(term)
-            || mural.description.contains(term)
-            || mural.images.iter().any(|image| {
-                image.filename.contains(term)
-                    || image
-                        .caption
-                        .as_ref()
-                        .map(|caption| caption.contains(term))
-                        .unwrap_or(false)
-                    || image.alt.contains(term)
-            })
-    })
+/// Search the main text content of a mural for a specific term
+fn search_mural_text(mural: &Mural, term: &str) -> bool {
+    mural.title.contains(term)
+        || mural.description.contains(term)
+        || mural.images.iter().any(|image| {
+            image.filename.contains(term)
+                || image
+                    .caption
+                    .as_ref()
+                    .map(|caption| caption.contains(term))
+                    .unwrap_or(false)
+                || image.alt.contains(term)
+        })
+}
+
+/// Search all content of a mural by a text query
+fn search_mural_all(mural: &Mural, term: &str) -> bool {
+    search_mural_text(mural, term) || format!("{}", mural.year).contains(term)
 }
