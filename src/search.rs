@@ -9,6 +9,8 @@ pub struct Search {
     query: String,
     // Filter by associated text
     text: String,
+    // Filter by tag
+    tag: String,
     // Filter by year painted
     min_year: Option<u16>,
     max_year: Option<u16>,
@@ -33,6 +35,7 @@ impl Search {
     /// Check if the search uses detailed filtering
     pub fn detailed(&self) -> bool {
         !self.text.is_empty()
+            || !self.tag.is_empty()
             || self.min_year.is_some()
             || self.max_year.is_some()
             || self.year.is_some()
@@ -42,6 +45,7 @@ impl Search {
     /// Check if the search filters by year only
     pub fn year_only(&self) -> bool {
         self.year.is_some()
+            && self.tag.is_empty()
             && self.query.is_empty()
             && self.text.is_empty()
             && self.min_year.is_none()
@@ -56,6 +60,10 @@ impl Search {
                 .split(' ')
                 .all(|term| search_mural_all(mural.1, term))
         {
+            return None;
+        }
+        // Filter by tag
+        if !self.tag.is_empty() && !mural.1.tags.iter().any(|tag| tag == &self.tag) {
             return None;
         }
         // Filter by text

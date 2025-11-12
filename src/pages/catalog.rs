@@ -39,10 +39,11 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
             template(
                 "catalog",
                 value! {
+                    tags: data.tags.iter().collect::<Vec<_>>(),
                     murals: murals,
                     search: &search,
-                    detailed_search: search.detailed(),
-                    year_only: search.year_only()
+                    year_only: search.year_only(),
+                    detailed_search: search.detailed()
                 },
             )
         }

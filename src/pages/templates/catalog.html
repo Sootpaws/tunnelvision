@@ -17,6 +17,16 @@
             <label>Contains text: <input type="text" name="text"
                 value="{{ search.text }}"
             /></label>
+            <label>Has tag: <select name="tag">
+                <option value=""
+                    {% if search.tag | equals: "" %} selected {% endif %}
+                >Any</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.0 }}"
+                        {% if search.tag | equals: tag.0 %} selected {% endif %}
+                    >{{ tag.1.name }}</option>
+                {% endfor %}
+            </select></label>
             <label>Minimum year: <input type="number" name="min_year"
                 {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
             /></label>

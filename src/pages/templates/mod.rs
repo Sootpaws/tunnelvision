@@ -27,6 +27,7 @@ static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
         .unwrap();
 
     te.add_function("append", |a: &str, b: &str| format!("{a}{b}"));
+    te.add_function("equals", |a: &str, b: &str| a == b);
     te.add_formatter("format_date", format_date);
 
     te
