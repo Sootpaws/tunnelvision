@@ -41,9 +41,12 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
                 value! {
                     tags: data.tags.iter().collect::<Vec<_>>(),
                     tag: data.tags.get(&search.tag),
+                    artists: data.artists.iter().collect::<Vec<_>>(),
+                    artist: data.artists.get(&search.artist),
                     murals: murals,
                     search: &search,
                     tag_only: search.tag_only(),
+                    artist_only: search.artist_only(),
                     year_only: search.year_only(),
                     detailed_search: search.detailed()
                 },

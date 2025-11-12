@@ -6,6 +6,7 @@
 <main class="catalog-main">
     <form>
         {% if tag_only %}<h2>Tag - {{ tag.name }}</h2>{% endif %}
+        {% if artist_only %}<h2>Artist - {{ artist.name }}</h2>{% endif %}
         {% if year_only %}<h2>Murals from {{ search.year }}</h2>{% endif %}
         <label class="search-bar">
             <input
@@ -26,6 +27,16 @@
                     <option value="{{ tag.0 }}"
                         {% if search.tag | equals: tag.0 %} selected {% endif %}
                     >{{ tag.1.name }}</option>
+                {% endfor %}
+            </select></label>
+            <label>Painted by: <select name="artist">
+                <option value=""
+                    {% if search.artist | equals: "" %} selected {% endif %}
+                >Any</option>
+                {% for artist in artists %}
+                    <option value="{{ artist.0 }}"
+                        {% if search.artist | equals: artist.0 %} selected {% endif %}
+                    >{{ artist.1.name }}</option>
                 {% endfor %}
             </select></label>
             <label>Minimum year: <input type="number" name="min_year"

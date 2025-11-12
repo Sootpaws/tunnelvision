@@ -11,6 +11,8 @@ pub struct Search {
     pub text: String,
     // Filter by tag
     pub tag: String,
+    // Filter by artist
+    pub artist: String,
     // Filter by year painted
     pub min_year: Option<u16>,
     pub max_year: Option<u16>,
@@ -36,6 +38,7 @@ impl Search {
     pub fn detailed(&self) -> bool {
         !self.text.is_empty()
             || !self.tag.is_empty()
+            || !self.artist.is_empty()
             || self.min_year.is_some()
             || self.max_year.is_some()
             || self.year.is_some()
@@ -45,15 +48,22 @@ impl Search {
     /// Check if the search filters by tag only
     pub fn tag_only(&self) -> bool {
         !self.tag.is_empty()
+            && self.artist.is_empty()
+            && self.year.is_none()
+            && self.no_non_header()
+    }
+
+    /// Check if the search filters by artist only
+    pub fn artist_only(&self) -> bool {
+        !self.artist.is_empty()
+            && self.tag.is_empty()
             && self.year.is_none()
             && self.no_non_header()
     }
 
     /// Check if the search filters by year only
     pub fn year_only(&self) -> bool {
-        self.year.is_some()
-            && self.tag.is_empty()
-            && self.no_non_header()
+        self.year.is_some() && self.tag.is_empty() && self.artist.is_empty() && self.no_non_header()
     }
 
     /// Check if any parameters are set that don't get a special header
@@ -74,10 +84,17 @@ impl Search {
         {
             return None;
         }
+
         // Filter by tag
         if !self.tag.is_empty() && !mural.1.tags.iter().any(|tag| tag == &self.tag) {
             return None;
         }
+
+        // Filter by artist
+        if !self.artist.is_empty() && !mural.1.artists.iter().any(|artist| artist == &self.artist) {
+            return None;
+        }
+
         // Filter by text
         if !self.text.is_empty()
             && !self
