@@ -5,22 +5,26 @@
 } %}
 <main class="catalog-main">
     <form>
-        <input type="search" name="query" value="{{ search.query }}">
-        <input type="submit" value="search" /><br />
+        <label class="search-bar">
+            <input
+                type="search" name="query" value="{{ search.query }}"
+                placeholder="Search..."
+            ><input type="submit" value="Search" />
+        </label>
         <details {% if detailed_search %} open="true" {% endif %} >
             <summary>Detailed Search</summary>
             <label>Contains text: <input type="text" name="text"
                 value="{{ search.text }}"
-            /></label><br />
+            /></label>
             <label>Minimum year: <input type="number" name="min_year"
                 {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
-            /></label><br />
+            /></label>
             <label>Maximum year: <input type="number" name="max_year"
                 {% if search.max_year %} value="{{ search.max_year }}" {% endif %}
-            /></label><br />
+            /></label>
             <label>Year: <input type="number" name="year"
                 {% if search.year %} value="{{ search.year }}" {% endif %}
-            /></label><br />
+            /></label>
             <label>By decade: <input type="checkbox" name="by_decade" value="true"
                 {% if search.by_decade %} checked="true" {% endif %}
             /></label>
