@@ -6,16 +6,16 @@ use std::collections::HashMap;
 #[serde(deny_unknown_fields, default)]
 pub struct Search {
     // Generic search over text and metadata
-    query: String,
+    pub query: String,
     // Filter by associated text
-    text: String,
+    pub text: String,
     // Filter by tag
-    tag: String,
+    pub tag: String,
     // Filter by year painted
-    min_year: Option<u16>,
-    max_year: Option<u16>,
-    year: Option<u16>,
-    by_decade: bool,
+    pub min_year: Option<u16>,
+    pub max_year: Option<u16>,
+    pub year: Option<u16>,
+    pub by_decade: bool,
 }
 
 impl Search {
@@ -42,11 +42,23 @@ impl Search {
             || self.by_decade
     }
 
+    /// Check if the search filters by tag only
+    pub fn tag_only(&self) -> bool {
+        !self.tag.is_empty()
+            && self.year.is_none()
+            && self.no_non_header()
+    }
+
     /// Check if the search filters by year only
     pub fn year_only(&self) -> bool {
         self.year.is_some()
             && self.tag.is_empty()
-            && self.query.is_empty()
+            && self.no_non_header()
+    }
+
+    /// Check if any parameters are set that don't get a special header
+    fn no_non_header(&self) -> bool {
+        self.query.is_empty()
             && self.text.is_empty()
             && self.min_year.is_none()
             && self.max_year.is_none()

@@ -5,6 +5,7 @@
 } %}
 <main class="catalog-main">
     <form>
+        {% if tag_only %}<h2>Tag - {{ tag.name }}</h2>{% endif %}
         {% if year_only %}<h2>Murals from {{ search.year }}</h2>{% endif %}
         <label class="search-bar">
             <input

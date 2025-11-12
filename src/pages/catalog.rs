@@ -40,8 +40,10 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
                 "catalog",
                 value! {
                     tags: data.tags.iter().collect::<Vec<_>>(),
+                    tag: data.tags.get(&search.tag),
                     murals: murals,
                     search: &search,
+                    tag_only: search.tag_only(),
                     year_only: search.year_only(),
                     detailed_search: search.detailed()
                 },
