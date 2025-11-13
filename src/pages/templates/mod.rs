@@ -21,6 +21,8 @@ static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
         .unwrap();
     te.add_template("mural", include_str!("mural.html"))
         .unwrap();
+    te.add_template("open_canvas", include_str!("open_canvas.html"))
+        .unwrap();
     te.add_template("not_found", include_str!("not_found.html"))
         .unwrap();
     te.add_template("error", include_str!("error.html"))

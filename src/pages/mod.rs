@@ -16,6 +16,9 @@ pub mod mural_old;
 /// Handler for `/static/{file}`
 pub mod statics;
 
+/// Handler for `/open-canvas`
+pub mod open_canvas;
+
 /// Fallback handler for 404 pages
 pub mod not_found;
 
