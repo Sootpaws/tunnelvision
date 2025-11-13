@@ -5,11 +5,12 @@ things that need to be done before this can become the primary version:
 
 - Sorting options
 - Fullsize / thumbnail handling
-- Auto-package export
 - About page
 - Licensing information
 - Open Canvas page
+- Transfer dataset
 - Feedback system
+- Auto-package export
 - API
 
 ## Development Environment

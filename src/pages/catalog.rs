@@ -35,13 +35,17 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
     match Query::<Search>::try_from_uri(&rebuilt) {
         Ok(Query(mut search)) => {
             search.normalize();
+            let mut tags = data.tags.iter().collect::<Vec<_>>();
+            tags.sort_by_key(|(_, tag)| &tag.name);
+            let mut artists = data.artists.iter().collect::<Vec<_>>();
+            artists.sort_by_key(|(_, artist)| &artist.name);
             let murals = search.apply(&data);
             template(
                 "catalog",
                 value! {
-                    tags: data.tags.iter().collect::<Vec<_>>(),
+                    tags: tags,
                     tag: data.tags.get(&search.tag),
-                    artists: data.artists.iter().collect::<Vec<_>>(),
+                    artists: artists,
                     artist: data.artists.get(&search.artist),
                     murals: murals,
                     search: &search,
