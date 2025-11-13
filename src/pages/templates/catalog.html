@@ -46,13 +46,13 @@
                     >{{ artist.1.name }}</option>
                 {% endfor %}
             </select></label>
-            <label>Minimum year: <input type="number" name="min_year"
+            <label>Minimum year: <input type="number" name="min_year" max="3000"
                 {% if search.min_year %} value="{{ search.min_year }}" {% endif %}
             /></label>
-            <label>Maximum year: <input type="number" name="max_year"
+            <label>Maximum year: <input type="number" name="max_year" max="3000"
                 {% if search.max_year %} value="{{ search.max_year }}" {% endif %}
             /></label>
-            <label>Year: <input type="number" name="year"
+            <label>Year: <input type="number" name="year" max="3000"
                 {% if search.year %} value="{{ search.year }}" {% endif %}
             /></label>
             <label>By decade: <input type="checkbox" name="by_decade" value="true"
