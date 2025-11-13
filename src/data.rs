@@ -137,8 +137,44 @@ impl Mural {
     pub fn process_images(&self, from: &Path, to: &Path) -> Result<()> {
         fs::create_dir_all(to).context("Could not create image store directory")?;
         for (index, image) in self.images.iter().enumerate() {
+            let generate_thumbnail = index == 0;
+            // Generate paths
+            let source_path = from.join(&image.filename);
+            let display_path = to.join(format!("display_{}", image.filename));
+            let thumbnail_path = to.join(format!("thumbnail_{}", image.filename));
+            // Check resize freshness
+            let source_modified = fs::metadata(&source_path)
+                .context("Could not get source file metadata")?
+                .modified()
+                .context("Could not get source file modification time")?;
+            let display_fresh =
+                if fs::exists(&display_path).context("Could not check if display file exists")? {
+                    let display_modified = fs::metadata(&display_path)
+                        .context("Could not get display file metadata")?
+                        .modified()
+                        .context("Could not get diplay file modification time")?;
+                    display_modified > source_modified
+                } else {
+                    false
+                };
+            let thumbnail_fresh = if fs::exists(&thumbnail_path)
+                .context("Could not check if thumbnail file exists")?
+            {
+                let thumbnail_modified = fs::metadata(&thumbnail_path)
+                    .context("Could not get thumbnail file metadata")?
+                    .modified()
+                    .context("Could not get thumbnail file modification time")?;
+                thumbnail_modified > source_modified
+            } else {
+                !generate_thumbnail
+            };
+            // Skip processing if processed versions alreay exist and are frehs
+            if display_fresh && thumbnail_fresh {
+                continue;
+            }
+            // Process display size image
             println!("Processing {}", image.filename);
-            let full = ImageReader::open(from.join(&image.filename))
+            let full = ImageReader::open(source_path)
                 .context(format!("Could not open source image {}", image.filename))?
                 .decode()
                 .context(format!("Could not decode source image {}", image.filename))?;
@@ -148,12 +184,13 @@ impl Mural {
                 FilterType::CatmullRom,
             );
             display
-                .save(to.join(format!("display_{}", image.filename)))
+                .save(display_path)
                 .context("Could not save display image")?;
-            if index == 0 {
+            // Process thumbnail
+            if generate_thumbnail {
                 display
                     .thumbnail(THUMBNAIL_IMAGE_WIDTH, THUMBNAIL_IMAGE_HEIGHT)
-                    .save(to.join(format!("thumbnail_{}", image.filename)))
+                    .save(thumbnail_path)
                     .context("Could not save thumbnail image")?;
             }
         }
