@@ -20,7 +20,10 @@
                 <p>
                     {%- if image.caption %} {{ image.caption }} <br>
                     {% endif -%} Photo: {{ image.by }},
-                    {{- image.date | format_date -}}
+                    {{- image.date | format_date }} <br>
+                    <a href="{{ mural_key }}/fullsize_{{ image.filename }}">
+                        View Full Size Image
+                    </a>
                 </p>
             </section>
         {% endfor %}</div>

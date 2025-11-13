@@ -222,6 +222,10 @@ nav > * {
                 background-color: var(--color-banner-background);
                 text-align: center;
                 color: var(--color-navbar-text);
+
+                a {
+                    color: var(--color-navbar-text);
+                }
             }
         }
 
