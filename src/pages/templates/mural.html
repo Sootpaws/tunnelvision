@@ -14,7 +14,7 @@
         <div>{% for image in mural.images %}
             <section>
                 <img
-                    src="{{ mural_key }}/{{ image.filename }}"
+                    src="{{ mural_key }}/display_{{ image.filename }}"
                     alt="{{ image.alt }}"
                 />
                 <p>

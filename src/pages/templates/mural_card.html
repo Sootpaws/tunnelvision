@@ -2,7 +2,7 @@
 <article class="mural-card"><a href="/mural/{{ mural_key }}">
     {% with mural.images.0 as image %}
         <img
-            src="/mural/{{ mural_key }}/{{ image.filename }}"
+            src="/mural/{{ mural_key }}/thumbnail_{{ image.filename }}"
             alt="{{ image.alt }}"
         />
         <p>{{ mural.title }}</p>

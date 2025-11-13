@@ -12,7 +12,7 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let data = tunnelvision::data::load(Path::new("data"))?;
+    let data = tunnelvision::data::load(Path::new("data"), Path::new("images"))?;
 
     let app = Router::new()
         .route("/", get(pages::home::page))
