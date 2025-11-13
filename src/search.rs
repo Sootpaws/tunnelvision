@@ -86,7 +86,7 @@ impl Search {
             && !self
                 .query
                 .split(' ')
-                .all(|term| search_mural_all(mural.1, term, data))
+                .all(|term| search_mural_all(mural.1, &term.to_ascii_lowercase(), data))
         {
             return None;
         }
@@ -106,7 +106,7 @@ impl Search {
             && !self
                 .text
                 .split(' ')
-                .all(|term| search_mural_text(mural.1, term))
+                .all(|term| search_mural_text(mural.1, &term.to_ascii_lowercase()))
         {
             return None;
         }
@@ -146,29 +146,36 @@ impl Search {
 
 /// Search the main text content of a mural for a specific term
 fn search_mural_text(mural: &Mural, term: &str) -> bool {
-    mural.title.contains(term)
-        || mural.description.contains(term)
+    mural.title.to_ascii_lowercase().contains(term)
+        || mural.description.to_ascii_lowercase().contains(term)
         || mural.images.iter().any(|image| {
-            image.filename.contains(term)
-                || image
-                    .caption
-                    .as_ref()
-                    .map(|caption| caption.contains(term))
-                    .unwrap_or(false)
-                || image.alt.contains(term)
+            image
+                .caption
+                .as_ref()
+                .map(|caption| caption.to_ascii_lowercase().contains(term))
+                .unwrap_or(false)
+                || image.alt.to_ascii_lowercase().contains(term)
         })
 }
 
 /// Search all content of a mural by a text query
 fn search_mural_all(mural: &Mural, term: &str, data: &Data) -> bool {
     search_mural_text(mural, term)
-        || mural
-            .tags
-            .iter()
-            .any(|tag| data.tags.get(tag).unwrap().name.contains(term))
-        || mural
-            .artists
-            .iter()
-            .any(|artist| data.artists.get(artist).unwrap().name.contains(term))
+        || mural.tags.iter().any(|tag| {
+            data.tags
+                .get(tag)
+                .unwrap()
+                .name
+                .to_ascii_lowercase()
+                .contains(term)
+        })
+        || mural.artists.iter().any(|artist| {
+            data.artists
+                .get(artist)
+                .unwrap()
+                .name
+                .to_ascii_lowercase()
+                .contains(term)
+        })
         || format!("{}", mural.year).contains(term)
 }
