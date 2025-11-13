@@ -200,17 +200,17 @@ nav > * {
         display: flex;
         flex-wrap: wrap;
 
-        div {
+        ol {
             flex: 1 1 65%;
             min-width: 0;
 
-            section {
+            li {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
 
-            section, img {
+            li, img {
                 width: 100%;
             }
 

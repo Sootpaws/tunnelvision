@@ -11,8 +11,8 @@
 <main class="mural-main">
     <h1>{{ mural.title }}</h1>
     <article>
-        <div>{% for image in mural.images %}
-            <section>
+        <ol>{% for image in mural.images %}
+            <li>
                 <img
                     src="{{ mural_key }}/display_{{ image.filename }}"
                     alt="{{ image.alt }}"
@@ -25,8 +25,8 @@
                         View Full Size Image
                     </a>
                 </p>
-            </section>
-        {% endfor %}</div>
+            </li>
+        {% endfor %}</ol>
         <section>
             {% if mural.description %}
                 <h2>Description:</h2>
