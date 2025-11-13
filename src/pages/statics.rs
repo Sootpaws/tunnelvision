@@ -30,6 +30,8 @@ fn content_type(file: &str) -> &str {
         "text/css"
     } else if file.ends_with(".png") {
         "image/png"
+    } else if file.ends_with(".jpg") {
+        "image/jpeg"
     } else {
         "text/plain"
     }
