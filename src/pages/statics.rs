@@ -32,6 +32,8 @@ fn content_type(file: &str) -> &str {
         "image/png"
     } else if file.ends_with(".jpg") {
         "image/jpeg"
+    } else if file.ends_with(".svg") {
+        "image/svg+xml"
     } else {
         "text/plain"
     }
