@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Serialize, Deserialize, Default, Debug)]
 #[serde(deny_unknown_fields, default)]
 pub struct Search {
+    // Sorting options
+    pub sort_by: Sorting,
     // Generic search over text and metadata
     pub query: String,
     // Filter by associated text
@@ -19,13 +21,28 @@ pub struct Search {
     pub by_decade: bool,
 }
 
+#[derive(Clone, Serialize, Deserialize, Default, Debug)]
+pub enum Sorting {
+    #[default]
+    #[serde(rename = "name")]
+    Name,
+    #[serde(rename = "year")]
+    Year,
+}
+
 impl Search {
     /// Filter and order a set of murals
     pub fn apply<'a>(&self, data: &'a Data) -> Vec<(&'a String, &'a Mural)> {
-        data.murals
+        let mut results = data
+            .murals
             .iter()
             .filter_map(|m| self.evaluate(m, data))
-            .collect()
+            .collect::<Vec<_>>();
+        match &self.sort_by {
+            Sorting::Name => results.sort_by_key(|(_, m)| &m.title),
+            Sorting::Year => results.sort_by_key(|(_, m)| &m.year),
+        }
+        results
     }
 
     /// Normalize search terms after deserialization

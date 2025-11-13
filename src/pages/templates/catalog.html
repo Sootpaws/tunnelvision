@@ -8,12 +8,19 @@
         {% if tag_only %}<h2>Tag - {{ tag.name }}</h2>{% endif %}
         {% if artist_only %}<h2>Artist - {{ artist.name }}</h2>{% endif %}
         {% if year_only %}<h2>Murals from {{ search.year }}</h2>{% endif %}
-        <label class="search-bar">
+        <section class="search-bar">
             <input
                 type="search" name="query" value="{{ search.query }}"
                 placeholder="Search..."
-            ><input type="submit" value="Search" />
-        </label>
+            ><label>Sort by: <select name="sort_by">
+                    <option value="name"
+                        {% if search.sort_by | equals: "name" %} selected {% endif %}
+                    >Name</option>
+                    <option value="year"
+                        {% if search.sort_by | equals: "year" %} selected {% endif %}
+                    >Year</option>
+            </select></label><input type="submit" value="Search" />
+        </section>
         <details {% if detailed_search %} open="true" {% endif %} >
             <summary>Detailed Search</summary>
             <label>Contains text: <input type="text" name="text"

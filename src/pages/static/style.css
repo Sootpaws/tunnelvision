@@ -128,24 +128,42 @@ nav > * {
             display: flex;
             margin-bottom: 0.5rem;
 
-            :first-child {
-                flex-grow: 1;
-                padding: 0.5rem 1rem;
-                border: 1px solid var(--color-navbar-hover);
-                border-right: none;
-                border-radius: 0.5rem 0 0 0.5rem;
+        }
+        .search-bar > :first-child {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-navbar-hover);
+            border-right: none;
+            border-radius: 0.5rem 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-bar > :nth-child(2) {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--color-navbar-hover);
+            border-left: none;
+            border-right: none;
+            font-size: 1rem;
+
+            select {
+                align-self: stretch;
+                margin-left: 0.25rem;
+                padding: 0;
+                border: none;
+                background: none;
                 font-size: 1rem;
             }
+        }
 
-            :last-child {
-                padding: 0 0.5rem;
-                background-color: var(--color-navbar-background);
-                color: var(--color-navbar-text);
-                border: 1px solid var(--color-navbar-background);
-                border-left: none;
-                border-radius: 0 0.5rem 0.5rem 0;
-                font-size: 1.125rem;
-            }
+        .search-bar > :last-child {
+            padding: 0 0.5rem;
+            background-color: var(--color-navbar-background);
+            color: var(--color-navbar-text);
+            border: 1px solid var(--color-navbar-background);
+            border-left: none;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 1.125rem;
         }
 
         details {
