@@ -3,7 +3,6 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
-- About page
 - Licensing information
 - Transfer dataset
 - Feedback system

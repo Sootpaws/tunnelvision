@@ -19,6 +19,9 @@ pub mod statics;
 /// Handler for `/open-canvas`
 pub mod open_canvas;
 
+/// Handler for `/about`
+pub mod about;
+
 /// Fallback handler for 404 pages
 pub mod not_found;
 

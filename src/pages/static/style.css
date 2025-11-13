@@ -313,6 +313,30 @@ nav > * {
     }
 }
 
+/* About page */
+.about-main {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    img {
+        width: 95%;
+    }
+
+    section {
+        padding: 1rem;
+
+        h2 {
+            text-align: center;
+        }
+    }
+
+    .center {
+        text-align: center;
+    }
+}
+
 /* Error pages */
 .error-main {
     margin: 0 3rem;
