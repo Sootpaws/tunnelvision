@@ -1,6 +1,5 @@
-use crate::data::Mural;
+use crate::data::{Data, Mural};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Clone, Serialize, Deserialize, Default, Debug)]
 #[serde(deny_unknown_fields, default)]
@@ -22,8 +21,11 @@ pub struct Search {
 
 impl Search {
     /// Filter and order a set of murals
-    pub fn apply<'a>(&self, murals: &'a HashMap<String, Mural>) -> Vec<(&'a String, &'a Mural)> {
-        murals.iter().filter_map(|m| self.evaluate(m)).collect()
+    pub fn apply<'a>(&self, data: &'a Data) -> Vec<(&'a String, &'a Mural)> {
+        data.murals
+            .iter()
+            .filter_map(|m| self.evaluate(m, data))
+            .collect()
     }
 
     /// Normalize search terms after deserialization
@@ -74,13 +76,17 @@ impl Search {
             && self.max_year.is_none()
     }
 
-    fn evaluate<'a>(&self, mural: (&'a String, &'a Mural)) -> Option<(&'a String, &'a Mural)> {
+    fn evaluate<'a>(
+        &self,
+        mural: (&'a String, &'a Mural),
+        data: &Data,
+    ) -> Option<(&'a String, &'a Mural)> {
         // Filter by general query
         if !self.query.is_empty()
             && !self
                 .query
                 .split(' ')
-                .all(|term| search_mural_all(mural.1, term))
+                .all(|term| search_mural_all(mural.1, term, data))
         {
             return None;
         }
@@ -154,6 +160,15 @@ fn search_mural_text(mural: &Mural, term: &str) -> bool {
 }
 
 /// Search all content of a mural by a text query
-fn search_mural_all(mural: &Mural, term: &str) -> bool {
-    search_mural_text(mural, term) || format!("{}", mural.year).contains(term)
+fn search_mural_all(mural: &Mural, term: &str, data: &Data) -> bool {
+    search_mural_text(mural, term)
+        || mural
+            .tags
+            .iter()
+            .any(|tag| data.tags.get(tag).unwrap().name.contains(term))
+        || mural
+            .artists
+            .iter()
+            .any(|artist| data.artists.get(artist).unwrap().name.contains(term))
+        || format!("{}", mural.year).contains(term)
 }

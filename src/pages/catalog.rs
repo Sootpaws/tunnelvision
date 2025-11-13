@@ -35,7 +35,7 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
     match Query::<Search>::try_from_uri(&rebuilt) {
         Ok(Query(mut search)) => {
             search.normalize();
-            let murals = search.apply(&data.murals);
+            let murals = search.apply(&data);
             template(
                 "catalog",
                 value! {
