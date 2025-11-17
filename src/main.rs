@@ -1,8 +1,8 @@
 use anyhow::Result;
 use axum::{Router, routing::get};
+use clap::Parser;
 use std::path::PathBuf;
 use tunnelvision::pages;
-use clap::Parser;
 
 #[tokio::main]
 async fn main() {

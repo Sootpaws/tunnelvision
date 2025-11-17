@@ -1,9 +1,9 @@
 use crate::pages::not_found;
 use axum::extract;
 use axum::http::header;
+use axum::http::uri::Uri;
 use axum::response::{IntoResponse, Response};
 use std::{fs, path};
-use axum::http::uri::Uri;
 
 const STATIC_PATH: &str = "src/pages/static";
 

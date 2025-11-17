@@ -1,7 +1,7 @@
 use crate::pages::statics::static_response;
 use axum::extract::{Path, State};
-use axum::response::Response;
 use axum::http::uri::Uri;
+use axum::response::Response;
 
 pub async fn page(
     State(data): State<crate::data::Data>,
