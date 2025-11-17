@@ -121,6 +121,7 @@ nav > * {
     flex-direction: column;
     justify-content: end;
     align-items: center;
+    background-size: cover;
 
     h1 {
         margin: 2rem 0;
