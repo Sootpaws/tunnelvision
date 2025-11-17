@@ -1,7 +1,8 @@
 use anyhow::Result;
 use axum::{Router, routing::get};
-use std::path::Path;
+use std::path::PathBuf;
 use tunnelvision::pages;
+use clap::Parser;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +13,9 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let data = tunnelvision::data::load(Path::new("data"), Path::new("images"))?;
+    let args = Args::parse();
+
+    let data = tunnelvision::data::load(&args.data_path, &args.images_path)?;
 
     let app = Router::new()
         .route("/", get(pages::home::page))
@@ -30,4 +33,15 @@ async fn run() -> Result<()> {
     axum::serve(listener, app).await?;
 
     Ok(())
+}
+
+#[derive(Parser, Debug)]
+#[command(version, about)]
+struct Args {
+    /// Path from which to load mural data
+    #[arg(short, long)]
+    data_path: PathBuf,
+    /// Path to use for caching resized images
+    #[arg(short, long)]
+    images_path: PathBuf,
 }
