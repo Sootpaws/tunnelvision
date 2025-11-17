@@ -122,6 +122,7 @@ nav > * {
     justify-content: end;
     align-items: center;
     background-size: cover;
+    background-position: center;
 
     h1 {
         margin: 2rem 0;
