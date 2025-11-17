@@ -61,9 +61,13 @@
         </details>
     </form>
     <section>
-        {% for mural in murals %}
-            {% include "mural_card" with mural %}
-        {% endfor %}
+        {% if no_results %}
+            No results!
+        {% else %}
+            {% for mural in murals %}
+                {% include "mural_card" with mural %}
+            {% endfor %}
+        {% endif %}
     </section>
 </main>
 {% include "page_post" %}
