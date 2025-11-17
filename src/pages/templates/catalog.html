@@ -16,9 +16,12 @@
                     <option value="name"
                         {% if search.sort_by | equals: "name" %} selected {% endif %}
                     >Name</option>
-                    <option value="year"
-                        {% if search.sort_by | equals: "year" %} selected {% endif %}
-                    >Year</option>
+                    <option value="newest"
+                        {% if search.sort_by | equals: "newest" %} selected {% endif %}
+                    >Newest</option>
+                    <option value="oldest"
+                        {% if search.sort_by | equals: "oldest" %} selected {% endif %}
+                    >Oldest</option>
             </select></label><input type="submit" value="Search" />
         </section>
         <details {% if detailed_search %} open="true" {% endif %} >
