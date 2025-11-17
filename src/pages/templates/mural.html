@@ -1,37 +1,53 @@
 {% include "page_pre" with {
-    "title": mural.title
+    "title": mural.title,
+    "path": ("/mural/" | append: mural_key),
+    "description": mural.description,
+    "image": ("/mural/" | append: mural_key | append: "/" | append: mural.images.0.filename),
+    "label1": "Year",
+    "data1": mural.year,
+    "label2": "Location",
+    "data2": mural.location
 } %}
 <main class="mural-main">
     <h1>{{ mural.title }}</h1>
     <article>
-        <div>{% for image in mural.images %}
-            <section>
+        <ol>{% for image in mural.images %}
+            <li>
                 <img
-                    src="{{ mural_key }}/{{ image.filename }}"
+                    src="{{ mural_key }}/display_{{ image.filename }}"
                     alt="{{ image.alt }}"
                 />
                 <p>
-                    {% if image.caption %} {{ image.caption }} <br> {% endif %}
-                    Photo: {{ image.by }},
-                    {{ image.date | format_date }}
+                    {%- if image.caption %} {{ image.caption }} <br>
+                    {% endif -%} Photo: {{ image.by }},
+                    {{- image.date | format_date }} <br>
+                    <a href="{{ mural_key }}/fullsize_{{ image.filename }}">
+                        View Full Size Image
+                    </a>
                 </p>
-            </section>
-        {% endfor %}</div>
+            </li>
+        {% endfor %}</ol>
         <section>
-            <h2>Description:</h2>
-            <p>{{ mural.description }}</p>
+            {% if mural.description %}
+                <h2>Description:</h2>
+                <p>{{ mural.description }}</p>
+            {% endif %}
             <h2>Year:</h2>
-            <a href="/year/{{ mural.year }}">{{ mural.year }}</a>
+            <a href="/catalog?year={{ mural.year }}">
+                {% if mural.year %}{{ mural.year }}{% else %}Unknown{% endif %}
+            </a>
             <h2>Location:</h2>
             <p>{{ mural.location }}</p>
             <h2>Tags:</h2>
             <ul class="tag-list"> {% for tag in tags %}
-                <li><a href="/tag/{{ tag.0 }}">{{ tag.1.name }}</a></li>
-            {% endfor %} </ul>
-            <h2>Artists:</h2>
-            <ul> {% for artist in artists %}
-                <li><a href="/artist/{{ artist.0 }}">{{ artist.1.name }}</a></li>
-            {% endfor %} </ul>
+                <li><a href="/catalog?tag={{ tag.0 }}">{{ tag.1.name }}</a></li>
+            {%- endfor -%} </ul>
+            {% if artists %}
+                <h2>Artists:</h2>
+                <ul> {% for artist in artists %}
+                    <li><a href="/catalog?artist={{ artist.0 }}">{{ artist.1.name }}</a></li>
+                {%- endfor -%} </ul>
+            {% endif %}
         </section>
     </article>
 </main>

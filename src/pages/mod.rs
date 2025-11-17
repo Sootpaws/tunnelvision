@@ -1,6 +1,9 @@
 /// Handler for `/`
 pub mod home;
 
+/// Handler for /catalog
+pub mod catalog;
+
 /// Handler for `/mural/{key}`
 pub mod mural;
 
@@ -12,6 +15,12 @@ pub mod mural_old;
 
 /// Handler for `/static/{file}`
 pub mod statics;
+
+/// Handler for `/open-canvas`
+pub mod open_canvas;
+
+/// Handler for `/about`
+pub mod about;
 
 /// Fallback handler for 404 pages
 pub mod not_found;

@@ -3,15 +3,10 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
-- Meta tags for murals
-- Tag/artist/year pages
-- Catalog page
-- Catalog search
-- Fullsize / thumbnail handling
-- Auto-package export
-- About page
-- Open Canvas page
+- Licensing information
+- Transfer dataset
 - Feedback system
+- Auto-package export
 - API
 
 ## Development Environment
@@ -19,11 +14,10 @@ things that need to be done before this can become the primary version:
 You will need:
 
 - An installed Rust toolchain ([rustup.rs](https://rustup.rs))
-- A mural dataset to display (see the premade test dataset in `sample_data`)
+- A mural dataset to display (such as the premade test dataset in `sample_data`)
 
-The dataset location is currently hardcoded to `./data`. If using the sample
-dataset, `ln -s sample_data data` will create a symbolic link to point the
-server to the sample dataset. Use `cargo run` to compile and run the server.
+Tunnelvision uses the Cargo build system with no non-Rust dependencies, and can
+be run like any other Rust program. The website will be served on port 8080.
 
 ## Dataset Format
 

@@ -1,8 +1,10 @@
 use anyhow::{Context, Result, anyhow, bail};
+use image::ImageReader;
+use image::imageops::FilterType;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use toml::value::Date;
 
 #[derive(Clone, Debug)]
@@ -10,6 +12,8 @@ pub struct Data {
     pub artists: HashMap<String, Artist>,
     pub tags: HashMap<String, Tag>,
     pub murals: HashMap<String, Mural>,
+    pub source: PathBuf,
+    pub image_store: PathBuf,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -47,25 +51,30 @@ pub struct Tag {
     pub name: String,
 }
 
-pub fn load(from: &Path) -> Result<Data> {
+pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
+    println!("Loading/processing data...");
     // Load artist data
-    let artists_path = from.join(Path::new("artists.toml"));
+    let artists_path = source.join(Path::new("artists.toml"));
     let artists_file = fs::read_to_string(artists_path).context("Could not read artists file")?;
     let artists: HashMap<String, Artist> =
         toml::from_str(&artists_file).context("Could not parse artists file")?;
     // Load tag data
-    let tags_path = from.join(Path::new("tags.toml"));
+    let tags_path = source.join(Path::new("tags.toml"));
     let tags_file = fs::read_to_string(tags_path).context("Could not read tags file")?;
     let tags: HashMap<String, Tag> =
         toml::from_str(&tags_file).context("Could not parse tags file")?;
     // Load murals
     let mut murals: HashMap<String, Mural> = HashMap::new();
-    for entry in std::fs::read_dir(from).context("Could not scan data directory")? {
+    for entry in std::fs::read_dir(source).context("Could not scan data directory")? {
         let entry = entry.context("Could not read data entry")?;
         let path = entry.path();
         if !path.is_dir() {
             continue;
         }
+        let mural_key = entry
+            .file_name()
+            .into_string()
+            .map_err(|bad| anyhow!("Mural directory name is invalid: {}", bad.display()))?;
         // Load mural data
         let mural_path = path.join("mural.toml");
         let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
@@ -85,21 +94,27 @@ pub fn load(from: &Path) -> Result<Data> {
                 bail!("Mural has tag {tag} which is not listed in tags file");
             }
         }
+        // Process images
+        mural
+            .process_images(&path, &image_store.join(&mural_key))
+            .context("Could not process mural images")?;
         // Add to mural list
-        murals.insert(
-            entry
-                .file_name()
-                .into_string()
-                .map_err(|bad| anyhow!("Mural directory name is invalid: {}", bad.display()))?,
-            mural,
-        );
+        murals.insert(mural_key, mural);
     }
+    println!("Done");
     Ok(Data {
         artists,
         tags,
         murals,
+        source: source.to_owned(),
+        image_store: image_store.to_owned(),
     })
 }
+
+const DISPLAY_IMAGE_WIDTH: u32 = 1600;
+const DISPLAY_IMAGE_HEIGHT: u32 = 1200;
+const THUMBNAIL_IMAGE_WIDTH: u32 = 256;
+const THUMBNAIL_IMAGE_HEIGHT: u32 = 256;
 
 impl Mural {
     /// Perform a lookup of this mural's tag keys
@@ -116,5 +131,69 @@ impl Mural {
             .iter()
             .map(|key| (key.as_str(), data.artists.get(key).unwrap()))
             .collect()
+    }
+
+    /// Generate display and thumbnail versions of associated images
+    pub fn process_images(&self, from: &Path, to: &Path) -> Result<()> {
+        fs::create_dir_all(to).context("Could not create image store directory")?;
+        for (index, image) in self.images.iter().enumerate() {
+            let generate_thumbnail = index == 0;
+            // Generate paths
+            let source_path = from.join(&image.filename);
+            let display_path = to.join(format!("display_{}", image.filename));
+            let thumbnail_path = to.join(format!("thumbnail_{}", image.filename));
+            // Check resize freshness
+            let source_modified = fs::metadata(&source_path)
+                .context("Could not get source file metadata")?
+                .modified()
+                .context("Could not get source file modification time")?;
+            let display_fresh =
+                if fs::exists(&display_path).context("Could not check if display file exists")? {
+                    let display_modified = fs::metadata(&display_path)
+                        .context("Could not get display file metadata")?
+                        .modified()
+                        .context("Could not get diplay file modification time")?;
+                    display_modified > source_modified
+                } else {
+                    false
+                };
+            let thumbnail_fresh = if fs::exists(&thumbnail_path)
+                .context("Could not check if thumbnail file exists")?
+            {
+                let thumbnail_modified = fs::metadata(&thumbnail_path)
+                    .context("Could not get thumbnail file metadata")?
+                    .modified()
+                    .context("Could not get thumbnail file modification time")?;
+                thumbnail_modified > source_modified
+            } else {
+                !generate_thumbnail
+            };
+            // Skip processing if processed versions alreay exist and are frehs
+            if display_fresh && thumbnail_fresh {
+                continue;
+            }
+            // Process display size image
+            println!("Processing {}", image.filename);
+            let full = ImageReader::open(source_path)
+                .context(format!("Could not open source image {}", image.filename))?
+                .decode()
+                .context(format!("Could not decode source image {}", image.filename))?;
+            let display = full.resize_exact(
+                DISPLAY_IMAGE_WIDTH,
+                DISPLAY_IMAGE_HEIGHT,
+                FilterType::CatmullRom,
+            );
+            display
+                .save(display_path)
+                .context("Could not save display image")?;
+            // Process thumbnail
+            if generate_thumbnail {
+                display
+                    .thumbnail(THUMBNAIL_IMAGE_WIDTH, THUMBNAIL_IMAGE_HEIGHT)
+                    .save(thumbnail_path)
+                    .context("Could not save thumbnail image")?;
+            }
+        }
+        Ok(())
     }
 }

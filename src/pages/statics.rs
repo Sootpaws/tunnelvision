@@ -1,17 +1,18 @@
 use crate::pages::not_found;
 use axum::extract;
 use axum::http::header;
+use axum::http::uri::Uri;
 use axum::response::{IntoResponse, Response};
 use std::{fs, path};
 
 const STATIC_PATH: &str = "src/pages/static";
 
-pub async fn page(extract::Path(file): extract::Path<String>) -> Response {
-    static_response(&path::Path::new(STATIC_PATH).join(&file), file).await
+pub async fn page(extract::Path(file): extract::Path<String>, uri: Uri) -> Response {
+    static_response(&path::Path::new(STATIC_PATH).join(&file), file, uri).await
 }
 
 /// Generate a response for a static file
-pub async fn static_response(file_path: &path::Path, file: String) -> Response {
+pub async fn static_response(file_path: &path::Path, file: String, uri: Uri) -> Response {
     match file_path.try_exists() {
         Ok(true) => match fs::read(file_path) {
             Ok(contents) => {
@@ -19,7 +20,7 @@ pub async fn static_response(file_path: &path::Path, file: String) -> Response {
             }
             Err(error) => format!("sad 2 {error:?}").into_response(),
         },
-        Ok(false) => not_found::page().await,
+        Ok(false) => not_found::page(uri).await,
         Err(error) => format!("sad {error:?}").into_response(),
     }
 }
@@ -30,6 +31,10 @@ fn content_type(file: &str) -> &str {
         "text/css"
     } else if file.ends_with(".png") {
         "image/png"
+    } else if file.ends_with(".jpg") {
+        "image/jpeg"
+    } else if file.ends_with(".svg") {
+        "image/svg+xml"
     } else {
         "text/plain"
     }

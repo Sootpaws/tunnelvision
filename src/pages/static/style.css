@@ -24,6 +24,11 @@ body {
     flex-direction: column;
 }
 
+main {
+    margin: 0 auto;
+    width: min(80rem, 100% - 1rem);
+}
+
 /* Navbar */
 nav {
     width: 100%;
@@ -32,10 +37,10 @@ nav {
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 1rem;
+    padding: 0.5rem 0;
 
     ul {
-        margin-top: 0;
+        margin: 0;
         padding: 0;
         display: flex;
         align-items: center;
@@ -56,9 +61,20 @@ nav {
     }
 
     a {
+        margin: 0;
         color: var(--color-navbar-text);
         text-decoration: none;
         font-size: 1.5rem;
+    }
+
+    img {
+        height: 2rem;
+    }
+
+    .icons {
+        li {
+            margin: 0 0.5rem;
+        }
     }
 }
 
@@ -70,8 +86,34 @@ nav > * {
     color: var(--color-navbar-active);
 }
 
+/* Mural card */
+.mural-card {
+    margin: 0.5rem;
+    width: 12rem;
+    border: 1px solid var(--color-navbar-hover);
+    border-radius: 0.25rem;
+
+    a {
+        text-decoration: none;
+
+        img {
+            width: 100%;
+            border-radius: 0.25rem 0.25rem 0 0;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin: 0 0 0.25rem;
+            text-align: center;
+            color: var(--color-text-main);
+        }
+    }
+}
+
 /* Home page */
 .home-main {
+    margin: 0;
+    width: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -88,48 +130,221 @@ nav > * {
     }
 }
 
+/* Catalog page */
+.catalog-main {
+    form {
+        margin: 2rem 0 1rem;
 
-/* Mural page */
-.mural-main {
-    margin: 0 auto;
-    width: min(80rem, 100% - 1rem);
-}
-
-article {
-    display: flex;
-    flex-wrap: wrap;
-
-    div {
-        flex: 1 1 65%;
-        min-width: 0;
-
-        section {
+        .search-bar {
             display: flex;
-            flex-direction: column;
+            margin-bottom: 0.5rem;
+
+        }
+        .search-bar > :first-child {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-navbar-hover);
+            border-right: none;
+            border-radius: 0.5rem 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-bar > :nth-child(2) {
+            display: flex;
             align-items: center;
+            border: 1px solid var(--color-navbar-hover);
+            border-left: none;
+            border-right: none;
+            font-size: 1rem;
+
+            select {
+                align-self: stretch;
+                margin-left: 0.25rem;
+                padding: 0;
+                border: none;
+                background: none;
+                font-size: 1rem;
+            }
         }
 
-        section, img {
-            width: 100%;
-        }
-
-        p {
-            position: relative;
-            bottom: 3rem;
-            padding: 1rem 2rem;
-            border-radius: 0.25rem;
-            background-color: var(--color-banner-background);
-            text-align: center;
+        .search-bar > :last-child {
+            padding: 0 0.5rem;
+            background-color: var(--color-navbar-background);
             color: var(--color-navbar-text);
+            border: 1px solid var(--color-navbar-background);
+            border-left: none;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 1.125rem;
+        }
+
+        details {
+            font-size: 1.25rem;
+            margin-left: 1.5rem;
+
+            label {
+                display: block;
+                margin: 0.5rem 0 0 2rem;
+
+                input {
+                    padding: 0.25rem 0.5rem;
+                    border: 1px solid var(--color-navbar-hover);
+                    border-radius: 0.5rem;
+                }
+            }
+        }
+
+        label {
+            font-size: 1rem;
         }
     }
 
     section {
-        box-sizing: border-box;
-        flex: 1 1 30%;
-        min-width: 22rem; /* Somewhat magic */
-        padding: 0 1rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
 
+
+/* Mural page */
+.mural-main {
+    article {
+        display: flex;
+        flex-wrap: wrap;
+
+        ol {
+            flex: 1 1 65%;
+            min-width: 0;
+
+            li {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            li, img {
+                width: 100%;
+            }
+
+            p {
+                position: relative;
+                bottom: 3rem;
+                padding: 1rem 2rem;
+                border-radius: 0.25rem;
+                background-color: var(--color-banner-background);
+                text-align: center;
+                color: var(--color-navbar-text);
+
+                a {
+                    color: var(--color-navbar-text);
+                }
+            }
+        }
+
+        section {
+            box-sizing: border-box;
+            flex: 1 1 30%;
+            min-width: 22rem; /* Somewhat magic */
+            padding: 0 1rem;
+
+        }
+    }
+}
+
+/* Open canvas page */
+.open-canvas-main {
+    header {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--color-banner-background);
+        color: var(--color-navbar-text);
+        border-radius: 0.25rem;
+
+        img {
+            width: 100%;
+            height: 15rem;
+            object-fit: cover;
+        }
+
+        h1 {
+            margin: 1rem 0 0;
+            font-size: 2.5rem;
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin: 0.5rem 0 1rem;
+            font-size: 2rem;
+        }
+    }
+
+    h3 {
+        margin: 0.25rem 0;
+        font-size: 1.75rem;
+        font-weight: normal;
+    }
+
+    details {
+        border: 1px solid var(--color-navbar-hover);
+        padding: 1rem;
+    }
+
+    .details-top {
+        border-radius: 0.25rem 0.25rem 0 0;
+    }
+
+    .details-bottom {
+        border-radius: 0 0 0.25rem 0.25rem;
+        margin-bottom: 5rem;
+    }
+
+    .banner-dark {
+        margin: 0.5rem 0;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        background-color: var(--color-navbar-background);
+        color: var(--color-navbar-text);
+        border-radius: 0.25rem;
+        font-size: 1.25rem;
+        text-decoration: none;
+    }
+
+    .banner-light {
+        margin: 0.5rem 0;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        background-color: var(--color-banner-background);
+        color: var(--color-navbar-text);
+        border-radius: 0.25rem;
+        font-size: 2rem;
+        text-decoration: none;
+    }
+}
+
+/* About page */
+.about-main {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    img {
+        width: 95%;
+    }
+
+    section {
+        padding: 1rem;
+
+        h2 {
+            text-align: center;
+        }
+    }
+
+    .center {
+        text-align: center;
     }
 }
 

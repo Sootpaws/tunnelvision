@@ -1,8 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% if ?.title %} {{ title }} - {% endif %} TunnelVision</title>
-        <!-- TODO: Open Graph tags -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tunnelvision.csh.rit.edu{% if ?.path %}{{ path }}{% endif %}"/>
+        <meta property="og:title" content="
+            {%- if ?.title -%} {{ title }} - {% endif -%} TunnelVision" />
+        <meta property="og:description" content=
+            {%- if ?.description %}"{{ description }}"{% else -%}
+            "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
+        {%- endif -%} />
+        <meta property="og:image" content=
+            {%- if ?.image %}"{{ image }}"
+            {%- else %}"/static/favicon.png"{% endif -%}
+        />
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:domain" value="tunnelvision.csh.rit.edu" />
+        <meta name="twitter:title" value="
+            {%- if ?.title -%} {{ title }} - {% endif -%} TunnelVision" />
+        <meta name="twitter:description" value=
+            {%- if ?.description %}"{{ description }}"{% else -%}
+            "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
+        {%- endif %} />
+        <meta name="twitter:image" content=
+            {%- if ?.image %}"{{ image }}"
+            {%- else %}"/static/favicon.png"{% endif -%}
+        />
+        <meta name="twitter:url" value="https://tunnelvision.csh.rit.edu{% if ?.path %}{{ path }}{% endif %}"/>
+        {% if ?.label1 %}<meta name="twitter:label1" value="{{ label1 }}" />
+        {% endif -%}
+        {% if ?.data1 %}<meta name="twitter:data1" value="{{ data1 }}" />
+        {% endif -%}
+        {% if ?.label2 %}<meta name="twitter:label2" value="{{ label2 }}" />
+        {% endif -%}
+        {% if ?.data2 %}<meta name="twitter:data2" value="{{ data2 }}" />
+        {% endif -%}
+        <meta name="description" value="TunnelVision is an interactive catalog of the mural under RIT's Residence Halls." />
+
+        <title>{% if ?.title -%} {{ title }} - {% endif -%} TunnelVision</title>
         <link rel="shortcut icon" href="/static/favicon.png">
         <link href="/static/style.css" rel="stylesheet" />
     </head>
@@ -11,17 +45,27 @@
             <a href="/">Tunnel<span class="navbar-active">Vision</span></a>
             <ul>
                 <li><a href="/"
-                    {% if ?.page_home %} class="navbar-active" {% endif %}
+                    {%- if ?.page_home %} class="navbar-active" {% endif -%}
                 >Home</a></li>
-                <li><a href="todo"
-                    {% if ?.page_catalog %} class="navbar-active" {% endif %}
+                <li><a href="/catalog"
+                    {%- if ?.page_catalog %} class="navbar-active" {% endif -%}
                 >Catalog</a></li>
-                <li><a href="todo"
-                    {% if ?.page_open_canvas %} class="navbar-active" {% endif %}
+                <li><a href="/open-canvas"
+                    {%- if ?.page_open_canvas %} class="navbar-active" {% endif -%}
                 >Open Canvas</a></li>
-                <li><a href="todo"
-                    {% if ?.page_about %} class="navbar-active" {% endif %}
+                <li><a href="/about"
+                    {%- if ?.page_about %} class="navbar-active" {% endif -%}
                 >About</a></li>
             </ul>
-            <a href="todo">Github</a>
+            <ul class="icons">
+                <li><a href="https://csh.rit.edu/">
+                    <img src="https://assets.csh.rit.edu/pubsite/csh_logo_square.svg" />
+                </a></li>
+                <li><a href="https://github.com/Sootpaws/tunnelvision">
+                    <img
+                        alt="Github" src="/static/github.svg"
+                        style="filter: invert(1)"
+                    />
+                </a></li>
+            </ul>
         </nav>

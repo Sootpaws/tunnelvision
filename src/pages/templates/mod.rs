@@ -14,15 +14,24 @@ static TE: LazyLock<Engine<'static>> = LazyLock::new(|| {
         .unwrap();
     te.add_template("page_post", include_str!("page_post.html"))
         .unwrap();
-    te.add_template("home", include_str!("home.html"))
+    te.add_template("mural_card", include_str!("mural_card.html"))
+        .unwrap();
+    te.add_template("home", include_str!("home.html")).unwrap();
+    te.add_template("catalog", include_str!("catalog.html"))
         .unwrap();
     te.add_template("mural", include_str!("mural.html"))
+        .unwrap();
+    te.add_template("open_canvas", include_str!("open_canvas.html"))
+        .unwrap();
+    te.add_template("about", include_str!("about.html"))
         .unwrap();
     te.add_template("not_found", include_str!("not_found.html"))
         .unwrap();
     te.add_template("error", include_str!("error.html"))
         .unwrap();
 
+    te.add_function("append", |a: &str, b: &str| format!("{a}{b}"));
+    te.add_function("equals", |a: &str, b: &str| a == b);
     te.add_formatter("format_date", format_date);
 
     te
@@ -48,7 +57,7 @@ fn format_date(f: &mut fmt::Formatter<'_>, value: &Value) -> fmt::Result {
         Value::Map(map) => match map.first_key_value() {
             Some((_, entry)) => match entry {
                 Value::String(combined) => {
-                    let mut parts = combined.split("-");
+                    let mut parts = combined.split('-');
                     if let Some(year) = parts.next()
                         && let Some(month) = parts.next()
                         && let Some(day) = parts.next()
