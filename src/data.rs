@@ -178,7 +178,7 @@ impl Mural {
                 .context(format!("Could not open source image {}", image.filename))?
                 .decode()
                 .context(format!("Could not decode source image {}", image.filename))?;
-            let display = full.resize_exact(
+            let display = full.resize(
                 DISPLAY_IMAGE_WIDTH,
                 DISPLAY_IMAGE_HEIGHT,
                 FilterType::CatmullRom,
