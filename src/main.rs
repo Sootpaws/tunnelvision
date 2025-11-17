@@ -17,20 +17,26 @@ async fn run() -> Result<()> {
 
     let data = tunnelvision::data::load(&args.data_path, &args.images_path)?;
 
-    let app = Router::new()
-        .route("/", get(pages::home::page))
-        .route("/catalog", get(pages::catalog::page))
-        .route("/mural/{key}", get(pages::mural::page))
-        .route("/mural/{key}/{file}", get(pages::mural_image::page))
-        .route("/murals/{id}", get(pages::mural_old::page))
-        .route("/open-canvas", get(pages::open_canvas::page))
-        .route("/about", get(pages::about::page))
-        .route("/static/{file}", get(pages::statics::page))
-        .fallback(pages::not_found::page)
-        .with_state(data);
+    if !args.validate_only {
+        println!("Starting webserver");
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
-    axum::serve(listener, app).await?;
+        let app = Router::new()
+            .route("/", get(pages::home::page))
+            .route("/catalog", get(pages::catalog::page))
+            .route("/mural/{key}", get(pages::mural::page))
+            .route("/mural/{key}/{file}", get(pages::mural_image::page))
+            .route("/murals/{id}", get(pages::mural_old::page))
+            .route("/open-canvas", get(pages::open_canvas::page))
+            .route("/about", get(pages::about::page))
+            .route("/static/{file}", get(pages::statics::page))
+            .fallback(pages::not_found::page)
+            .with_state(data);
+
+        let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
+        axum::serve(listener, app).await?;
+    } else {
+        println!("Validation/processing done");
+    }
 
     Ok(())
 }
@@ -38,6 +44,9 @@ async fn run() -> Result<()> {
 #[derive(Parser, Debug)]
 #[command(version, about)]
 struct Args {
+    /// Don't start the webserver, only load, validate, and process dataset
+    #[arg(short, long)]
+    validate_only: bool,
     /// Path from which to load mural data
     #[arg(short, long)]
     data_path: PathBuf,
