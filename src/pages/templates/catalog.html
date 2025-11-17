@@ -29,7 +29,7 @@
             <label>Has tag: <select name="tag">
                 <option value=""
                     {% if search.tag | equals: "" %} selected {% endif %}
-                >Any</option>
+                ></option>
                 {% for tag in tags %}
                     <option value="{{ tag.0 }}"
                         {% if search.tag | equals: tag.0 %} selected {% endif %}
@@ -39,7 +39,7 @@
             <label>Painted by: <select name="artist">
                 <option value=""
                     {% if search.artist | equals: "" %} selected {% endif %}
-                >Any</option>
+                ></option>
                 {% for artist in artists %}
                     <option value="{{ artist.0 }}"
                         {% if search.artist | equals: artist.0 %} selected {% endif %}
