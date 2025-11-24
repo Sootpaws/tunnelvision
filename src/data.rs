@@ -49,6 +49,7 @@ pub struct Artist {
 #[serde(deny_unknown_fields)]
 pub struct Tag {
     pub name: String,
+    pub description: String,
 }
 
 pub fn load(source: &Path, image_store: &Path) -> Result<Data> {

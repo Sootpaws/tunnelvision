@@ -9,6 +9,15 @@ things that need to be done before this can become the primary version:
 - Auto-package export
 - API
 
+## Ideas
+
+Page for historical images
+Year ranges
+Updated about page, stuff about the club
+Open canvas timelapses
+Non-CSH url
+Random mural button
+
 ## Development Environment
 
 You will need:
