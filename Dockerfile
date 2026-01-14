@@ -6,8 +6,9 @@ COPY static static
 COPY Cargo.* .
 RUN cargo build --release
 # Fetch dataset
-# TODO: Pull real dataset
-COPY sample_data /data
+RUN apt-get update && apt-get install rclone
+RUN --mount=type=secret,id=rclone_config \
+    rclone --config=/run/secrets/rclone_config copy source: /data
 
 # Build final image
 FROM scratch
