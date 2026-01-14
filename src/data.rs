@@ -36,6 +36,7 @@ pub struct Image {
     pub caption: Option<String>,
     pub date: Date,
     pub by: String,
+    #[serde(default)]
     pub alt: String,
 }
 
