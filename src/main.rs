@@ -15,7 +15,7 @@ async fn main() {
 async fn run() -> Result<()> {
     let args = Args::parse();
 
-    let data = tunnelvision::data::load(&args.data_path, &args.images_path)?;
+    let data = tunnelvision::data::load(&args.data_path, &args.image_cache)?;
 
     if !args.validate_only {
         println!("Starting webserver");
@@ -52,5 +52,5 @@ struct Args {
     data_path: PathBuf,
     /// Path to use for caching resized images
     #[arg(short, long)]
-    images_path: PathBuf,
+    image_cache: PathBuf,
 }
