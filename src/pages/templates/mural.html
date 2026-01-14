@@ -2,7 +2,12 @@
     "title": mural.title,
     "path": ("/mural/" | append: mural_key),
     "description": mural.description,
-    "image": ("/mural/" | append: mural_key | append: "/" | append: mural.images.0.filename),
+    "image": (
+        "/mural/" |
+        append: mural_key |
+        append: "/thumbnail_" |
+        append: mural.images.0.filename
+    ),
     "label1": "Year",
     "data1": mural.year,
     "label2": "Location",
