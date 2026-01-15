@@ -8,7 +8,7 @@ RUN cargo build --release
 # Fetch dataset
 RUN apt-get update && apt-get install rclone
 RUN --mount=type=secret,id=rclone_config \
-    rclone --config=/run/secrets/rclone_config copy source: /data
+    rclone --progress --config=/run/secrets/rclone_config copy source: /data
 
 # Build final image
 FROM scratch
