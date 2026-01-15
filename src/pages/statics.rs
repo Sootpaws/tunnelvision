@@ -5,7 +5,7 @@ use axum::http::uri::Uri;
 use axum::response::{IntoResponse, Response};
 use std::{fs, path};
 
-const STATIC_PATH: &str = "src/pages/static";
+const STATIC_PATH: &str = "static";
 
 pub async fn page(extract::Path(file): extract::Path<String>, uri: Uri) -> Response {
     static_response(&path::Path::new(STATIC_PATH).join(&file), file, uri).await

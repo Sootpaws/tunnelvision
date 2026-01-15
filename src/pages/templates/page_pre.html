@@ -34,7 +34,10 @@
         {% endif -%}
         {% if ?.data2 %}<meta name="twitter:data2" value="{{ data2 }}" />
         {% endif -%}
-        <meta name="description" value="TunnelVision is an interactive catalog of the mural under RIT's Residence Halls." />
+        <meta name="description" value=
+            {%- if ?.description %}"{{ description }}"{% else -%}
+            "TunnelVision is an interactive catalog of the mural under RIT's Residence Halls."
+        {%- endif %} />
 
         <title>{% if ?.title -%} {{ title }} - {% endif -%} TunnelVision</title>
         <link rel="shortcut icon" href="/static/favicon.png">

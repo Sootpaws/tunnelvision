@@ -1,8 +1,18 @@
 [featured]
 name = "Featured"
+description = """
+Featured Murals
+"""
 
 [needs_more_information]
 name = "Needs more information"
+description = """
+We don't know much about these murals and would love to hear from community
+members about them!
+"""
 
 [sih]
 name = "SIH"
+description = """
+Special Interest Houses
+"""

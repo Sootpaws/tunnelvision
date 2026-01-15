@@ -36,6 +36,7 @@ pub struct Image {
     pub caption: Option<String>,
     pub date: Date,
     pub by: String,
+    #[serde(default)]
     pub alt: String,
 }
 
@@ -49,6 +50,7 @@ pub struct Artist {
 #[serde(deny_unknown_fields)]
 pub struct Tag {
     pub name: String,
+    pub description: String,
 }
 
 pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
@@ -78,7 +80,7 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
         // Load mural data
         let mural_path = path.join("mural.toml");
         let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
-        let mural: Mural = toml::from_str(&mural_file).context("Could not path mural file")?;
+        let mural: Mural = toml::from_str(&mural_file).context("Could not parse mural file")?;
         // Check that there is at least one image
         if mural.images.is_empty() {
             bail!("Mural has no images, at least one is required");
@@ -96,8 +98,8 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
         }
         // Process images
         mural
-            .process_images(&path, &image_store.join(&mural_key))
-            .context("Could not process mural images")?;
+            .process_images(&path, &image_store.join(&mural_key), &mural_key)
+            .context(format!("Could not process images for mural {mural_key}"))?;
         // Add to mural list
         murals.insert(mural_key, mural);
     }
@@ -134,7 +136,7 @@ impl Mural {
     }
 
     /// Generate display and thumbnail versions of associated images
-    pub fn process_images(&self, from: &Path, to: &Path) -> Result<()> {
+    pub fn process_images(&self, from: &Path, to: &Path, mural_key: &str) -> Result<()> {
         fs::create_dir_all(to).context("Could not create image store directory")?;
         for (index, image) in self.images.iter().enumerate() {
             let generate_thumbnail = index == 0;
@@ -173,12 +175,12 @@ impl Mural {
                 continue;
             }
             // Process display size image
-            println!("Processing {}", image.filename);
+            println!("Processing {mural_key}/{}", image.filename);
             let full = ImageReader::open(source_path)
                 .context(format!("Could not open source image {}", image.filename))?
                 .decode()
                 .context(format!("Could not decode source image {}", image.filename))?;
-            let display = full.resize_exact(
+            let display = full.resize(
                 DISPLAY_IMAGE_WIDTH,
                 DISPLAY_IMAGE_HEIGHT,
                 FilterType::CatmullRom,

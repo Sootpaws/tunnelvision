@@ -26,8 +26,10 @@ pub enum Sorting {
     #[default]
     #[serde(rename = "name")]
     Name,
-    #[serde(rename = "year")]
-    Year,
+    #[serde(rename = "newest")]
+    Newest,
+    #[serde(rename = "oldest")]
+    Oldest,
 }
 
 impl Search {
@@ -40,7 +42,11 @@ impl Search {
             .collect::<Vec<_>>();
         match &self.sort_by {
             Sorting::Name => results.sort_by_key(|(_, m)| &m.title),
-            Sorting::Year => results.sort_by_key(|(_, m)| &m.year),
+            Sorting::Newest => {
+                results.sort_by_key(|(_, m)| &m.year);
+                results.reverse();
+            }
+            Sorting::Oldest => results.sort_by_key(|(_, m)| &m.year),
         }
         results
     }

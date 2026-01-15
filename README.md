@@ -3,11 +3,23 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
+- Finish and approve data guide
+- Entries for all current murals
 - Licensing information
-- Transfer dataset
+- Update about page
 - Feedback system
 - Auto-package export
 - API
+- Project structure docs
+- Open canvas timelapses
+
+## Ideas
+
+Page for historical images
+Year ranges
+Stuff about the club in about
+Non-CSH url
+Random mural button
 
 ## Development Environment
 
