@@ -43,10 +43,12 @@
             </a>
             <h2>Location:</h2>
             <p>{{ mural.location }}</p>
-            <h2>Tags:</h2>
-            <ul class="tag-list"> {% for tag in tags %}
-                <li><a href="/catalog?tag={{ tag.0 }}">{{ tag.1.name }}</a></li>
-            {%- endfor -%} </ul>
+            {% if tags %}
+                <h2>Tags:</h2>
+                <ul class="tag-list"> {% for tag in tags %}
+                    <li><a href="/catalog?tag={{ tag.0 }}">{{ tag.1.name }}</a></li>
+                {%- endfor -%} </ul>
+            {% endif %}
             {% if artists %}
                 <h2>Artists:</h2>
                 <ul> {% for artist in artists %}

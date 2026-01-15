@@ -7,7 +7,6 @@ things that need to be done before this can become the primary version:
 - Entries for all current murals
 - Licensing information
 - Mural key in processing messages
-- Hide tags/artists when none are present
 - Update about page
 - Feedback system
 - Auto-package export
