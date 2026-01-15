@@ -6,10 +6,20 @@
 <main class="catalog-main">
     <form>
         {% if tag_only %}
-            <h2>Tag - {{ tag.name }}</h2>
-            <p>{{ tag.description }}</p>
+            {% if tag %}
+                <h2>Tag - {{ tag.name }}</h2>
+                <p>{{ tag.description }}</p>
+            {% else %}
+                <h2>Tag does not exist</h2>
+            {% endif %}
         {% endif %}
-        {% if artist_only %}<h2>Artist - {{ artist.name }}</h2>{% endif %}
+        {% if artist_only %}
+            {% if artist %}
+                <h2>Artist - {{ artist.name }}</h2>
+            {% else %}
+                <h2>Artist does not exist</h2>
+            {% endif %}
+        {% endif %}
         {% if year_only %}<h2>Murals from {{ search.year }}</h2>{% endif %}
         <section class="search-bar">
             <input
