@@ -98,7 +98,7 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
         }
         // Process images
         mural
-            .process_images(&path, &image_store.join(&mural_key))
+            .process_images(&path, &image_store.join(&mural_key), &mural_key)
             .context(format!("Could not process images for mural {mural_key}"))?;
         // Add to mural list
         murals.insert(mural_key, mural);
@@ -136,7 +136,7 @@ impl Mural {
     }
 
     /// Generate display and thumbnail versions of associated images
-    pub fn process_images(&self, from: &Path, to: &Path) -> Result<()> {
+    pub fn process_images(&self, from: &Path, to: &Path, mural_key: &str) -> Result<()> {
         fs::create_dir_all(to).context("Could not create image store directory")?;
         for (index, image) in self.images.iter().enumerate() {
             let generate_thumbnail = index == 0;
@@ -175,7 +175,7 @@ impl Mural {
                 continue;
             }
             // Process display size image
-            println!("Processing {}", image.filename);
+            println!("Processing {mural_key}/{}", image.filename);
             let full = ImageReader::open(source_path)
                 .context(format!("Could not open source image {}", image.filename))?
                 .decode()

@@ -6,7 +6,6 @@ things that need to be done before this can become the primary version:
 - Finish and approve data guide
 - Entries for all current murals
 - Licensing information
-- Mural key in processing messages
 - Update about page
 - Feedback system
 - Auto-package export
