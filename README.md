@@ -7,43 +7,37 @@ things that need to be done before this can become the primary version:
 - Entries for all current murals
 - Licensing information
 - Update about page
-- Feedback system
-- Auto-package export
-- API
+- Stuff about the club in about
 - Project structure docs
-- Open canvas timelapses
 
 ## Ideas
 
-Page for historical images
-Year ranges
-Stuff about the club in about
-Non-CSH url
-Random mural button
-
-## Development Environment
-
-You will need:
-
-- An installed Rust toolchain ([rustup.rs](https://rustup.rs))
-- A mural dataset to display (such as the premade test dataset in `sample_data`)
-
-Tunnelvision uses the Cargo build system with no non-Rust dependencies, and can
-be run like any other Rust program. The website will be served on port 8080.
+- Feedback system
+- Auto-package export
+- API
+- Open canvas timelapses
+- Page for historical images
+- Year ranges on murals
+- Non-CSH url
+- Random mural button
+- Spatial relation metadata
 
 ## Dataset Format
 
 All of the information displayed on Tunnelvision is stored in a data
-directory, currently fixed as `./data`, in the form of TOML files and images.
-The layout of the data directory is as follows:
+directory (specified on the command line when Tunnelvision is run) in the form
+of TOML files and images. The layout of the data directory is as follows:
 
 - `artists.toml`: Information on each artist. An artist must have an entry here
     to be listed as the painter of a mural.
 - `tags.toml`: Information on each tag. A tag must have an entry here to be
     listed as a tag on a mural
-- `{mural_key}/mural.toml`: Information on the mural with name `mural_key`.
+- `*/{mural_key}/mural.toml`: Information on the mural with name `mural_key`.
     Images associated with the mural should be put in this directory alongside
     the `mural.toml` file.
+
+Mural directories can be put directly in the main data directory, or any level
+of subdirectory for organization.
 
 ### `artists.toml`
 
@@ -75,3 +69,28 @@ Mural entry:
     + `date` - Date: Date on which the image was taken
     + `by` - String: Image attribution to display
     + `alt` - String: Alt text for the image
+
+## Development Environment
+
+You will need:
+
+- An installed Rust toolchain ([rustup.rs](https://rustup.rs))
+- A mural dataset to display (such as the premade test dataset in `sample_data`)
+
+Tunnelvision uses the Cargo build system with no non-Rust dependencies, and can
+be run like any other Rust program. The website will be served on port 8080.
+There are two required command line arguments, `--data-path <PATH>` (`-d`) and
+`--image-cache <PATH>` (`-i`). `data-path` is the location of the data directory
+to present, and `image-cache` is the path to where Tunnelvision will cache
+downscaled versions of images (such as thumbnails). The image cache is very
+helpful for development, as doing image processing on debug builds is quite
+slow.
+
+## Deployment
+
+A Dockerfile is included for building a deployable container image. Part of the
+build process is fetching the dataset to display, which is done using
+[`rclone`](https://rclone.org). The `rclone` configuration is passed as a Docker
+secret with ID `rclone_config` (or any other method that puts the configuration
+file at `/run/secrets/rclone_config`), and should specify a remote with the name
+`source`. Once the container is built, no secrets are needed at runtime.
