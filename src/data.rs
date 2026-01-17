@@ -78,6 +78,7 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
     })
 }
 
+/// Recursively load murals from a directory
 fn load_murals(
     source: &Path,
     image_store: &Path,

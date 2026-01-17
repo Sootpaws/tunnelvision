@@ -8,7 +8,6 @@ things that need to be done before this can become the primary version:
 - Licensing information
 - Update about page
 - Stuff about the club in about
-- Project structure docs
 
 ## Ideas
 
