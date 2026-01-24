@@ -1,4 +1,4 @@
-use anyhow::{Context, Result, anyhow, bail};
+use anyhow::{Context, Result, anyhow, bail, ensure};
 use image::ImageReader;
 use image::imageops::FilterType;
 use serde::{Deserialize, Serialize};
@@ -121,7 +121,10 @@ fn load_murals(
                 .process_images(&path, &image_store.join(&mural_key), &mural_key)
                 .context(format!("Could not process images for mural {mural_key}"))?;
             // Add to mural list
-            murals.insert(mural_key, mural);
+            ensure!(
+                murals.insert(mural_key.clone(), mural).is_none(),
+                "Duplicate mural key {mural_key}"
+            );
         } else {
             load_murals(&path, image_store, artists, tags, murals)?;
         }
