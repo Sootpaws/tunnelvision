@@ -22,6 +22,7 @@
                     cargo
                     clippy
                     rustfmt
+                    rclone
                 ];
             };
         });

@@ -1,4 +1,4 @@
-use anyhow::{Context, Result, anyhow, bail};
+use anyhow::{Context, Result, anyhow, bail, ensure};
 use image::ImageReader;
 use image::imageops::FilterType;
 use serde::{Deserialize, Serialize};
@@ -66,43 +66,8 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
     let tags: HashMap<String, Tag> =
         toml::from_str(&tags_file).context("Could not parse tags file")?;
     // Load murals
-    let mut murals: HashMap<String, Mural> = HashMap::new();
-    for entry in std::fs::read_dir(source).context("Could not scan data directory")? {
-        let entry = entry.context("Could not read data entry")?;
-        let path = entry.path();
-        if !path.is_dir() {
-            continue;
-        }
-        let mural_key = entry
-            .file_name()
-            .into_string()
-            .map_err(|bad| anyhow!("Mural directory name is invalid: {}", bad.display()))?;
-        // Load mural data
-        let mural_path = path.join("mural.toml");
-        let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
-        let mural: Mural = toml::from_str(&mural_file).context("Could not parse mural file")?;
-        // Check that there is at least one image
-        if mural.images.is_empty() {
-            bail!("Mural has no images, at least one is required");
-        }
-        // Verify artists and tags
-        for artist in &mural.artists {
-            if !artists.contains_key(artist) {
-                bail!("Mural has artist {artist} which is not listed in artists file");
-            }
-        }
-        for tag in &mural.tags {
-            if !tags.contains_key(tag) {
-                bail!("Mural has tag {tag} which is not listed in tags file");
-            }
-        }
-        // Process images
-        mural
-            .process_images(&path, &image_store.join(&mural_key), &mural_key)
-            .context(format!("Could not process images for mural {mural_key}"))?;
-        // Add to mural list
-        murals.insert(mural_key, mural);
-    }
+    let mut murals = HashMap::new();
+    load_murals(source, image_store, &artists, &tags, &mut murals)?;
     println!("Done");
     Ok(Data {
         artists,
@@ -111,6 +76,60 @@ pub fn load(source: &Path, image_store: &Path) -> Result<Data> {
         source: source.to_owned(),
         image_store: image_store.to_owned(),
     })
+}
+
+/// Recursively load murals from a directory
+fn load_murals(
+    source: &Path,
+    image_store: &Path,
+    artists: &HashMap<String, Artist>,
+    tags: &HashMap<String, Tag>,
+    murals: &mut HashMap<String, Mural>,
+) -> Result<()> {
+    for entry in std::fs::read_dir(source).context("Could not scan data directory")? {
+        let entry = entry.context("Could not read data entry")?;
+        let path = entry.path();
+        if !path.is_dir() {
+            continue;
+        }
+        let mural_path = path.join("mural.toml");
+        if fs::exists(&mural_path).context("Could not check if mural.toml exists")? {
+            let mural_key = entry
+                .file_name()
+                .into_string()
+                .map_err(|bad| anyhow!("Mural directory name is invalid: {}", bad.display()))?;
+            // Load mural data
+            let mural_file = fs::read_to_string(mural_path).context("Could not read mural file")?;
+            let mural: Mural = toml::from_str(&mural_file).context("Could not parse mural file")?;
+            // Check that there is at least one image
+            if mural.images.is_empty() {
+                bail!("Mural has no images, at least one is required");
+            }
+            // Verify artists and tags
+            for artist in &mural.artists {
+                if !artists.contains_key(artist) {
+                    bail!("Mural has artist {artist} which is not listed in artists file");
+                }
+            }
+            for tag in &mural.tags {
+                if !tags.contains_key(tag) {
+                    bail!("Mural has tag {tag} which is not listed in tags file");
+                }
+            }
+            // Process images
+            mural
+                .process_images(&path, &image_store.join(&mural_key), &mural_key)
+                .context(format!("Could not process images for mural {mural_key}"))?;
+            // Add to mural list
+            ensure!(
+                murals.insert(mural_key.clone(), mural).is_none(),
+                "Duplicate mural key {mural_key}"
+            );
+        } else {
+            load_murals(&path, image_store, artists, tags, murals)?;
+        }
+    }
+    Ok(())
 }
 
 const DISPLAY_IMAGE_WIDTH: u32 = 1600;
