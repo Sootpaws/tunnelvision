@@ -7,8 +7,8 @@
     All main data structures are defined here, along with constants for the
     dimensions of display and thumbnail images.
 - `src/search.rs`: Defines the search query data structure, and implements the
-    filtering and sorting system. This is relatively primitive, and could be
-    improved.
+    filtering and sorting system. The number of items per page is also defined
+    here. The search system is relatively primitive, and could be improved.
 - `src/pages/mod.rs`: Just for organization, one module for each page plus the
     `templates` module.
 - `src/pages/about.rs`: Renders the about page template
@@ -37,6 +37,9 @@
     based on file extension (there's probably a better way to do this).
 - `src/path/templates/mod.rs`: Initializes the templating engine, registers
     templates, and provides templating-related utilities.
+- `src/pages/templates/page_buttons.html`: Previous/next page buttons. Currently
+    hardcoded to the catalog page, and the CSS used is also under the catalog
+    section
 - `src/pages/templates/page_pre.html`: Shared template for all pages. Generates
     `meta` tags for embeds, links the CSS, and renders the navbar. This gets
     included at the start of all other pages.

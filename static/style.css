@@ -29,8 +29,8 @@ main {
     width: min(80rem, 100% - 1rem);
 }
 
-/* Navbar */
-nav {
+/* Main navbar */
+body > nav {
     width: 100%;
     background-color: var(--color-navbar-background);
     display: flex;
@@ -136,6 +136,8 @@ nav > * {
 
 /* Catalog page */
 .catalog-main {
+    padding-bottom: 2rem;
+
     form {
         margin: 2rem 0 1rem;
 
@@ -199,6 +201,28 @@ nav > * {
 
         label {
             font-size: 1rem;
+        }
+    }
+
+    nav {
+        width: 100%;
+        display: flex;
+
+        .left {
+            margin-right: auto;
+        }
+        .right {
+            margin-left: auto;
+        }
+
+        a {
+            margin-bottom: 0;
+            color: var(--color-navbar-text);
+            background: var(--color-navbar-active);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            text-decoration: none;
         }
     }
 

@@ -53,7 +53,11 @@ pub async fn page(State(data): State<crate::data::Data>, uri: Uri) -> Response {
                     tag_only: search.tag_only(),
                     artist_only: search.artist_only(),
                     year_only: search.year_only(),
-                    detailed_search: search.detailed()
+                    detailed_search: search.detailed(),
+                    page_info: value! {
+                        page_forward: serde_qs::to_string(&search.forwards(data.murals.len())).unwrap(),
+                        page_back: serde_qs::to_string(&search.back()).unwrap()
+                    }
                 },
             )
         }

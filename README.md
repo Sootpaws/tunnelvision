@@ -3,7 +3,6 @@
 This is an in-progress rewrite of the original Tunnelvision, and there are a lot
 things that need to be done before this can become the primary version:
 
-- Finish and approve data guide
 - Entries for all current murals
 - Licensing information
 - Update about page
