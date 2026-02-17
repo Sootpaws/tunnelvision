@@ -24,7 +24,7 @@
 - `src/pages/mural_image.rs`: Hander for mural images. Does some logic to figure
     out where the image is located.
 - `src/pages/mural_old.rs`: Redirect for mural URLs from the original version
-    of Tunnelvision (`/murals/{id}`). Only works for murals with the `old_id`
+    of TunnelVision (`/murals/{id}`). Only works for murals with the `old_id`
     field set.
 - `src/pages/not_found.rs`: Fallback for nonexistant pages (both paths like
     `/nonexistant` and `/mural/nonexistant`). Call this on requests for
