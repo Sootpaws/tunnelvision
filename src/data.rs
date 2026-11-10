@@ -161,6 +161,7 @@ impl Mural {
             let generate_thumbnail = index == 0;
             // Generate paths
             let source_path = from.join(&image.filename);
+            let fullsize_path = to.join(format!("fullsize_{}", image.filename));
             let display_path = to.join(format!("display_{}", image.filename));
             let thumbnail_path = to.join(format!("thumbnail_{}", image.filename));
             // Check resize freshness
@@ -168,6 +169,16 @@ impl Mural {
                 .context("Could not get source file metadata")?
                 .modified()
                 .context("Could not get source file modification time")?;
+            let fullsize_fresh =
+                if fs::exists(&fullsize_path).context("Could not check if fullsize file exists")? {
+                    let fullsize_modified = fs::metadata(&fullsize_path)
+                        .context("Could not get fullsize file metadata")?
+                        .modified()
+                        .context("Could not get fullsize file modification time")?;
+                    fullsize_modified > source_modified
+                } else {
+                    false
+                };
             let display_fresh =
                 if fs::exists(&display_path).context("Could not check if display file exists")? {
                     let display_modified = fs::metadata(&display_path)
@@ -190,15 +201,18 @@ impl Mural {
                 !generate_thumbnail
             };
             // Skip processing if processed versions alreay exist and are frehs
-            if display_fresh && thumbnail_fresh {
+            if fullsize_fresh && display_fresh && thumbnail_fresh {
                 continue;
             }
-            // Process display size image
             println!("Processing {mural_key}/{}", image.filename);
+            // Link fullsize image
             let full = ImageReader::open(source_path)
                 .context(format!("Could not open source image {}", image.filename))?
                 .decode()
                 .context(format!("Could not decode source image {}", image.filename))?;
+            // TODO: This could be a symlink
+            full.save(fullsize_path).context("Could not save fullsize image")?;
+            // Process display size image
             let display = full.resize(
                 DISPLAY_IMAGE_WIDTH,
                 DISPLAY_IMAGE_HEIGHT,

@@ -76,6 +76,7 @@
             /></label>
         </details>
     </form>
+    {% include "page_buttons" with page_info %}
     <section>
         {% if no_results %}
             No results!
@@ -85,5 +86,6 @@
             {% endfor %}
         {% endif %}
     </section>
+    {% include "page_buttons" with page_info %}
 </main>
 {% include "page_post" %}

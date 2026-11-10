@@ -8,10 +8,5 @@ pub async fn page(
     Path((mural_key, file)): Path<(String, String)>,
     uri: Uri,
 ) -> Response {
-    let path = if let Some(original) = file.strip_prefix("fullsize_") {
-        data.source.join(&mural_key).join(original)
-    } else {
-        data.image_store.join(&mural_key).join(&file)
-    };
-    static_response(&path, file, uri).await
+    static_response(&data.image_store.join(&mural_key).join(&file), file, uri).await
 }

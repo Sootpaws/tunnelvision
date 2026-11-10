@@ -1,10 +1,8 @@
-# Tunnelvision - An interactive catalog of RIT's Murals
+# TunnelVision - An interactive catalog of RIT's Murals
 
-This is an in-progress rewrite of the original Tunnelvision, and there are a lot
+This is an in-progress rewrite of the original TunnelVision, and there are a lot
 things that need to be done before this can become the primary version:
 
-- Finish and approve data guide
-- Entries for all current murals
 - Licensing information
 - Update about page
 - Stuff about the club in about
@@ -23,8 +21,8 @@ things that need to be done before this can become the primary version:
 
 ## Dataset Format
 
-All of the information displayed on Tunnelvision is stored in a data
-directory (specified on the command line when Tunnelvision is run) in the form
+All of the information displayed on TunnelVision is stored in a data
+directory (specified on the command line when TunnelVision is run) in the form
 of TOML files and images. The layout of the data directory is as follows:
 
 - `artists.toml`: Information on each artist. An artist must have an entry here
@@ -55,7 +53,7 @@ Table from tag key string to tag entry: Tag entry:
 Mural entry:
 
 - `title` - String: Display name of the mural
-- `old_id`- Optional string: Numeric ID for compatability with old Tunnelvision
+- `old_id`- Optional string: Numeric ID for compatability with old TunnelVision
     mural URLs
 - `year` - Positive integer: Year the mural was painted
 - `location` - String: Description of the mural's approximate location
@@ -76,11 +74,11 @@ You will need:
 - An installed Rust toolchain ([rustup.rs](https://rustup.rs))
 - A mural dataset to display (such as the premade test dataset in `sample_data`)
 
-Tunnelvision uses the Cargo build system with no non-Rust dependencies, and can
+TunnelVision uses the Cargo build system with no non-Rust dependencies, and can
 be run like any other Rust program. The website will be served on port 8080.
 There are two required command line arguments, `--data-path <PATH>` (`-d`) and
 `--image-cache <PATH>` (`-i`). `data-path` is the location of the data directory
-to present, and `image-cache` is the path to where Tunnelvision will cache
+to present, and `image-cache` is the path to where TunnelVision will cache
 downscaled versions of images (such as thumbnails). The image cache is very
 helpful for development, as doing image processing on debug builds is quite
 slow.

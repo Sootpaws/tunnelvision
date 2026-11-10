@@ -1,9 +1,14 @@
 use crate::data::{Data, Mural};
 use serde::{Deserialize, Serialize};
 
+/// Number of murals to show on one page
+pub const PAGE_SIZE: usize = 50;
+
 #[derive(Clone, Serialize, Deserialize, Default, Debug)]
 #[serde(deny_unknown_fields, default)]
 pub struct Search {
+    // Pagination
+    pub page: usize,
     // Sorting options
     pub sort_by: Sorting,
     // Generic search over text and metadata
@@ -49,6 +54,10 @@ impl Search {
             Sorting::Oldest => results.sort_by_key(|(_, m)| &m.year),
         }
         results
+            .into_iter()
+            .skip(PAGE_SIZE * self.page)
+            .take(PAGE_SIZE)
+            .collect()
     }
 
     /// Normalize search terms after deserialization
@@ -89,6 +98,30 @@ impl Search {
     /// Check if the search filters by year only
     pub fn year_only(&self) -> bool {
         self.year.is_some() && self.tag.is_empty() && self.artist.is_empty() && self.no_non_header()
+    }
+
+    /// Get the search for the next page
+    pub fn forwards(&self, mural_count: usize) -> Option<Search> {
+        if (self.page + 1) * PAGE_SIZE < mural_count {
+            Some(Search {
+                page: self.page + 1,
+                ..self.clone()
+            })
+        } else {
+            None
+        }
+    }
+
+    /// Get the search for the previous page
+    pub fn back(&self) -> Option<Search> {
+        if self.page > 0 {
+            Some(Search {
+                page: self.page - 1,
+                ..self.clone()
+            })
+        } else {
+            None
+        }
     }
 
     /// Check if any parameters are set that don't get a special header

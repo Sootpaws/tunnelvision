@@ -1,0 +1,8 @@
+<nav>
+    {% if page_back %}
+        <a class="left" href="/catalog?{{page_back}}">Previous</a>
+    {% endif %}
+    {% if page_forward %}
+        <a class="right" href="/catalog?{{page_forward}}">Next</a>
+    {% endif %}
+</nav>
