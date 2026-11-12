@@ -3,7 +3,8 @@ use axum::extract;
 use axum::http::header;
 use axum::http::uri::Uri;
 use axum::response::{IntoResponse, Response};
-use std::{fs, path};
+use std::path;
+use tokio::fs;
 
 const STATIC_PATH: &str = "static";
 
@@ -13,8 +14,8 @@ pub async fn page(extract::Path(file): extract::Path<String>, uri: Uri) -> Respo
 
 /// Generate a response for a static file
 pub async fn static_response(file_path: &path::Path, file: String, uri: Uri) -> Response {
-    match file_path.try_exists() {
-        Ok(true) => match fs::read(file_path) {
+    match fs::try_exists(file_path).await {
+        Ok(true) => match fs::read(file_path).await {
             Ok(contents) => {
                 ([(header::CONTENT_TYPE, content_type(&file))], contents).into_response()
             }
