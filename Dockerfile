@@ -1,4 +1,4 @@
-FROM rust:latest as build
+FROM docker.io/rust:latest as build
 # Build server
 WORKDIR /build
 COPY src src
